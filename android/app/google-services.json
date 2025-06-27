@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "358026434934",
+    "project_id": "hostel-hunt-d3f9d",
+    "storage_bucket": "hostel-hunt-d3f9d.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:358026434934:android:b8545842e67e9944f14257",
+        "android_client_info": {
+          "package_name": "com.example.hostelhunt_app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAv1YuNMHZiDfGWvGzl1ZlZKMSVX0JFY4E"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
