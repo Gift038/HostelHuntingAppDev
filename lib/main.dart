@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'screens/welcome_page.dart';
-import 'screens/register_page.dart';
+import 'screens/welcome_screen.dart';
+import 'screens/home_page.dart';
+
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
 
@@ -36,8 +37,8 @@ class HostelHuntApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       initialRoute: '/',
       routes: {
-        '/': (context) => const WelcomePage(),
-        '/register': (context) => const RegisterPage(),
+        '/': (context) => const WelcomeScreen(),
+        '/dashboard': (context) => const HomeScreen(),
       },
     );
   }
