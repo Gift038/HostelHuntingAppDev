@@ -87,7 +87,7 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
             Container(
               padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
               decoration: BoxDecoration(
-                color: Colors.grey.shade200,
+                color: Colors.brown[100],
                 borderRadius: BorderRadius.circular(12),
               ),
               child: Row(
@@ -97,7 +97,7 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                   const Expanded(
                     child: Text(
                       'Search for hostels',
-                      style: TextStyle(color: Colors.grey),
+                      style: TextStyle(color: Colors.brown),
                     ),
                   )
                 ],
@@ -236,16 +236,32 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
         ),
       ),
       bottomNavigationBar: BottomNavigationBar(
+        backgroundColor: Colors.brown[100],
+        type: BottomNavigationBarType.fixed, // Ensures labels are always shown
         selectedItemColor: coffeeBrown,
         unselectedItemColor: lightCoffeeBrown,
         currentIndex: 0,
-        items: [
-          BottomNavigationBarItem(icon: Icon(Icons.home, color: coffeeBrown), label: 'Home'),
-          BottomNavigationBarItem(icon: Icon(Icons.notifications, color: lightCoffeeBrown), label: 'Notifications'),
-          BottomNavigationBarItem(icon: Icon(Icons.person, color: lightCoffeeBrown), label: 'Tenant'),
-          BottomNavigationBarItem(icon: Icon(Icons.cases_rounded, color: lightCoffeeBrown), label: 'Manager'),
+        showUnselectedLabels: true, // Optional: Show labels for unselected items too
+        items: const [
+          BottomNavigationBarItem(
+            icon: Icon(Icons.house_rounded),
+            label: 'Home',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.notifications),
+            label: 'Notifications',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.person),
+            label: "Tenant's Dashboard",
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.cases_rounded),
+            label: "Manager's Dashboard",
+          ),
         ],
       ),
+
     );
   }
 }
