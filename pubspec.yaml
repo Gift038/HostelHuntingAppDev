@@ -72,6 +72,10 @@ flutter:
      - assets/hostel1.jpg
      - assets/hostel2.jpg
      - assets/hostel3.jpg
+     - assets/hostel4.jpeg
+     - assets/hostel5.jpg
+    #  - assets/hostel6.jpg
+
 
 
   # An image asset can refer to one or more resolution-specific "variants", see

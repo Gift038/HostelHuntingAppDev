@@ -1,4 +1,3 @@
-import 'dart:async';
 import 'package:flutter/material.dart';
 import '../../widgets/hostel_card.dart';
 import '../../widgets/service_card.dart';
@@ -82,7 +81,7 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
       case 3:
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => const ManagersDashboardScreen()),
+          MaterialPageRoute(builder: (context) => const ManagerDashboard()),
         );
         break;
     }
