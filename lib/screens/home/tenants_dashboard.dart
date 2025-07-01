@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import '../../widgets/hostel_card.dart';
+import '../../widgets/hostel_list_tile.dart';
 
 class TenantsDashboardScreen extends StatefulWidget {
   const TenantsDashboardScreen({super.key});
@@ -145,6 +146,16 @@ class _TenantsDashboardScreenState extends State<TenantsDashboardScreen>
                     subtitle: 'Find hostels near UCU',
                   ),
                   HostelCard(
+                    imagePath: 'assets/hostel5.jpg',
+                    title: 'Victoria University Hostels',
+                    subtitle: 'Find hostels near Victoria University',
+                  ),
+                  HostelCard(
+                    imagePath: 'assets/hostel6.jpg',
+                    title: 'Ndejje University Hostels',
+                    subtitle: 'Find hostels near Ndejje University',
+                  ),
+                  HostelCard(
                     imagePath: 'assets/hostel4.jpg',
                     title: 'Busitema University Hostels',
                     subtitle: 'Find hostels near Busitema University',
@@ -155,6 +166,104 @@ class _TenantsDashboardScreenState extends State<TenantsDashboardScreen>
           ),
           const SliverToBoxAdapter(
             child: SizedBox(height: 24),
+          ),
+          SliverList(
+            delegate: SliverChildListDelegate([
+              // Section 1: Makerere University Hostels
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: const [
+                    Text(
+                      'Makerere University Hostels',
+                      style: TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.brown,
+                      ),
+                    ),
+                    SizedBox(height: 2),
+                    Text(
+                      'Hostels near Makerere University',
+                      style: TextStyle(
+                        fontSize: 14,
+                        fontWeight: FontWeight.normal,
+                        color: Colors.grey,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              HostelListTile(
+                imagePath: 'assets/hostel1.jpg',
+                name: 'The Student Hub',
+                rating: 4.8,
+                reviews: 120,
+                price: 25,
+              ),
+              HostelListTile(
+                imagePath: 'assets/hostel2.jpg',
+                name: 'Campus Living',
+                rating: 4.6,
+                reviews: 95,
+                price: 30,
+              ),
+              HostelListTile(
+                imagePath: 'assets/hostel3.jpg',
+                name: 'University Residence',
+                rating: 4.5,
+                reviews: 150,
+                price: 20,
+              ),
+              // Section 2: Victoria University Hostels
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: const [
+                    Text(
+                      'Victoria University Hostels',
+                      style: TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.brown,
+                      ),
+                    ),
+                    SizedBox(height: 2),
+                    Text(
+                      'Hostels near Victoria University',
+                      style: TextStyle(
+                        fontSize: 14,
+                        fontWeight: FontWeight.normal,
+                        color: Colors.grey,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              HostelListTile(
+                imagePath: 'assets/hostel5.jpg',
+                name: 'Scholars Inn',
+                rating: 4.9,
+                reviews: 135,
+                price: 28,
+              ),
+              HostelListTile(
+                imagePath: 'assets/hostel4.jpg',
+                name: 'Academic Suites',
+                rating: 4.7,
+                reviews: 110,
+                price: 35,
+              ),
+              HostelListTile(
+                imagePath: 'assets/hostel6.jpg',
+                name: 'Victoria Residence',
+                rating: 4.4,
+                reviews: 90,
+                price: 32,
+              ),
+            ]),
           ),
         ],
       ),
