@@ -42,18 +42,7 @@ class HostelHuntApp extends StatelessWidget {
     return MaterialApp(
       title: 'HostelHunt',
       debugShowCheckedModeBanner: false,
-      initialRoute: '/',
-      routes: {
-        '/': (context) => const WelcomeScreen(),
-        '/dashboard': (context) => const HomeScreen(),
-        '/search_filter': (context) => const SearchFilterScreen(),
-        '/results': (context) => HostelListScreen(),
-        '/hostel_detail': (context) => HostelDetailScreen(),
-        '/booking': (context) => BookingScreen(),
-        '/payment': (context) => PaymentScreen(),
-        '/notifications': (context) => NotificationScreen(),
-        '/profile': (context) => ProfileScreen(),
-      },
+      home: DemoProfileScreen(),
     );
   }
 }
