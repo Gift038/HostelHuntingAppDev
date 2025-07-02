@@ -44,6 +44,8 @@ class ProfileScreen extends StatelessWidget {
   final UserProfile user;
   const ProfileScreen({Key? key, required this.user}) : super(key: key);
 
+  ProfileScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

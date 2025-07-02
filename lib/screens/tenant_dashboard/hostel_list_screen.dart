@@ -7,6 +7,8 @@ class HostelListScreen extends StatelessWidget {
     {"name": "Kampala Hostel", "price": "UGX 350,000", "image": "https://via.placeholder.com/150"},
   ];
 
+  HostelListScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
