@@ -1,4 +1,3 @@
-import 'dart:async';
 import 'package:flutter/material.dart';
 import '../../widgets/hostel_card.dart';
 import '../../widgets/hostel_list_tile.dart';
@@ -250,26 +249,107 @@ class _TenantsDashboardScreenState extends State<TenantsDashboardScreen>
                   ],
                 ),
               ),
-              HostelListTile(
-                imagePath: 'assets/hostel1.jpg',
-                name: 'The Student Hub',
-                rating: 4.8,
-                reviews: 120,
-                price: 25,
+              GestureDetector(
+                onTap: () {
+                  Navigator.pushNamed(
+                    context,
+                    '/maps',
+                    arguments: {
+                      'university': 'Makerere University',
+                      'hostels': [
+                        {
+                          'name': 'The Student Hub',
+                          'imagePath': 'assets/hostel1.jpg',
+                        },
+                        {
+                          'name': 'Campus Living',
+                          'imagePath': 'assets/hostel2.jpg',
+                        },
+                        {
+                          'name': 'University Residence',
+                          'imagePath': 'assets/hostel3.jpg',
+                        },
+                      ],
+                    },
+                  );
+                },
+                child: HostelListTile(
+                  imagePath: 'assets/hostel1.jpg',
+                  name: 'The Student Hub',
+                  rating: 4.8,
+                  reviews: 120,
+                  price: 500000,
+                  details: 'Wandegeya',
+                  type: 'Gender Type: Mixed - Both female and male',
+                ),
               ),
-              HostelListTile(
-                imagePath: 'assets/hostel2.jpg',
-                name: 'Campus Living',
-                rating: 4.6,
-                reviews: 95,
-                price: 30,
+              GestureDetector(
+                onTap: () {
+                  Navigator.pushNamed(
+                    context,
+                    '/maps',
+                    arguments: {
+                      'university': 'Makerere University',
+                      'hostels': [
+                        {
+                          'name': 'The Student Hub',
+                          'imagePath': 'assets/hostel1.jpg',
+                        },
+                        {
+                          'name': 'Campus Living',
+                          'imagePath': 'assets/hostel2.jpg',
+                        },
+                        {
+                          'name': 'University Residence',
+                          'imagePath': 'assets/hostel3.jpg',
+                        },
+                      ],
+                    },
+                  );
+                },
+                child: HostelListTile(
+                  imagePath: 'assets/hostel2.jpg',
+                  name: 'Campus Living',
+                  rating: 4.6,
+                  reviews: 95,
+                  price: 400000,
+                  details: 'Kikoni',
+                  type: 'Gender Type: Single - Only Males',
+                ),
               ),
-              HostelListTile(
-                imagePath: 'assets/hostel3.jpg',
-                name: 'University Residence',
-                rating: 4.5,
-                reviews: 150,
-                price: 20,
+              GestureDetector(
+                onTap: () {
+                  Navigator.pushNamed(
+                    context,
+                    '/maps',
+                    arguments: {
+                      'university': 'Makerere University',
+                      'hostels': [
+                        {
+                          'name': 'The Student Hub',
+                          'imagePath': 'assets/hostel1.jpg',
+                        },
+                        {
+                          'name': 'Campus Living',
+                          'imagePath': 'assets/hostel2.jpg',
+                        },
+                        {
+                          'name': 'University Residence',
+                          'imagePath': 'assets/hostel3.jpg',
+                        },
+                      ],
+                    },
+                  );
+                },
+                child: HostelListTile(
+                  imagePath: 'assets/hostel3.jpg',
+                  name: 'University Residence',
+                  rating: 4.5,
+                  reviews: 150,
+                  price: 550000,
+                  details: 'Makerere University',
+                  type: 'Gender Type: Single - Only Females',
+                ),
               ),
               // Section 2: Victoria University Hostels
               Padding(
@@ -297,26 +377,107 @@ class _TenantsDashboardScreenState extends State<TenantsDashboardScreen>
                   ],
                 ),
               ),
-              HostelListTile(
-                imagePath: 'assets/hostel5.jpg',
-                name: 'Scholars Inn',
-                rating: 4.9,
-                reviews: 135,
-                price: 28,
+              GestureDetector(
+                onTap: () {
+                  Navigator.pushNamed(
+                    context,
+                    '/maps',
+                    arguments: {
+                      'university': 'Victoria University',
+                      'hostels': [
+                        {
+                          'name': 'Scholars Inn',
+                          'imagePath': 'assets/hostel5.jpg',
+                        },
+                        {
+                          'name': 'Academic Suites',
+                          'imagePath': 'assets/hostel4.jpeg',
+                        },
+                        {
+                          'name': 'Victoria Residence',
+                          'imagePath': 'assets/hostel6.jpg',
+                        },
+                      ],
+                    },
+                  );
+                },
+                child: HostelListTile(
+                  imagePath: 'assets/hostel5.jpg',
+                  name: 'Scholars Inn',
+                  rating: 4.9,
+                  reviews: 135,
+                  price: 600000,
+                  details: 'Victoria University',
+                  type: 'Gender Type: Mixed - Both female and male',
+                ),
               ),
-              HostelListTile(
-                imagePath: 'assets/hostel4.jpeg',
-                name: 'Academic Suites',
-                rating: 4.7,
-                reviews: 110,
-                price: 35,
+              GestureDetector(
+                onTap: () {
+                  Navigator.pushNamed(
+                    context,
+                    '/maps',
+                    arguments: {
+                      'university': 'Victoria University',
+                      'hostels': [
+                        {
+                          'name': 'Scholars Inn',
+                          'imagePath': 'assets/hostel5.jpg',
+                        },
+                        {
+                          'name': 'Academic Suites',
+                          'imagePath': 'assets/hostel4.jpeg',
+                        },
+                        {
+                          'name': 'Victoria Residence',
+                          'imagePath': 'assets/hostel6.jpg',
+                        },
+                      ],
+                    },
+                  );
+                },
+                child: HostelListTile(
+                  imagePath: 'assets/hostel4.jpeg',
+                  name: 'Academic Suites',
+                  rating: 4.7,
+                  reviews: 110,
+                  price: 700000,
+                  details: 'Victoria University',
+                  type: 'Gender Type: Single - Only Females',
+                ),
               ),
-              HostelListTile(
-                imagePath: 'assets/hostel6.jpg',
-                name: 'Victoria Residence',
-                rating: 4.4,
-                reviews: 90,
-                price: 32,
+              GestureDetector(
+                onTap: () {
+                  Navigator.pushNamed(
+                    context,
+                    '/maps',
+                    arguments: {
+                      'university': 'Victoria University',
+                      'hostels': [
+                        {
+                          'name': 'Scholars Inn',
+                          'imagePath': 'assets/hostel5.jpg',
+                        },
+                        {
+                          'name': 'Academic Suites',
+                          'imagePath': 'assets/hostel4.jpeg',
+                        },
+                        {
+                          'name': 'Victoria Residence',
+                          'imagePath': 'assets/hostel6.jpg',
+                        },
+                      ],
+                    },
+                  );
+                },
+                child: HostelListTile(
+                  imagePath: 'assets/hostel6.jpg',
+                  name: 'Victoria Residence',
+                  rating: 4.4,
+                  reviews: 90,
+                  price: 650000,
+                  details: 'Victoria University',
+                  type: 'Gender Type: Single - Only Males',
+                ),
               ),
             ]),
           ),

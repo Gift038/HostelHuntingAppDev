@@ -6,6 +6,8 @@ class HostelListTile extends StatefulWidget {
   final double rating;
   final int reviews;
   final int price;
+  final String details;
+  final String type;
 
   const HostelListTile({
     super.key,
@@ -14,6 +16,8 @@ class HostelListTile extends StatefulWidget {
     required this.rating,
     required this.reviews,
     required this.price,
+    required this.details,
+    required this.type,
   });
 
   @override
@@ -41,7 +45,7 @@ class _HostelListTileState extends State<HostelListTile> {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 // Left: Details
-                Expanded(
+                Flexible(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -60,7 +64,7 @@ class _HostelListTileState extends State<HostelListTile> {
                           Icon(Icons.star, color: Colors.amber, size: 18),
                           const SizedBox(width: 4),
                           Text(
-                            '• ${widget.reviews} reviews',
+                            '\u2022 ${widget.reviews} reviews',
                             style: TextStyle(
                               color: _isHovered ? Colors.white70 : Colors.grey,
                               fontSize: 13,
@@ -75,6 +79,49 @@ class _HostelListTileState extends State<HostelListTile> {
                           fontWeight: FontWeight.bold,
                           fontSize: 18,
                           color: _isHovered ? Colors.white : Colors.black,
+                        ),
+                      ),
+                      const SizedBox(height: 2),
+                      Text(
+                        widget.type,
+                        style: TextStyle(
+                          color: Colors.grey[700],
+                          fontSize: 14,
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
+                      const SizedBox(height: 4),
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.pushNamed(
+                            context,
+                            '/maps',
+                            arguments: {
+                              'university': widget.details,
+                              'hostels': [
+                                {
+                                  'name': widget.name,
+                                  'imagePath': widget.imagePath,
+                                }
+                              ],
+                            },
+                          );
+                        },
+                        child: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Icon(Icons.location_on, color: const Color(0xFF9C7A5F), size: 18),
+                            const SizedBox(width: 4),
+                            Text(
+                              widget.details,
+                              style: TextStyle(
+                                color: const Color(0xFF9C7A5F),
+                                fontWeight: FontWeight.bold,
+                                fontSize: 15,
+                                decoration: TextDecoration.none,
+                              ),
+                            ),
+                          ],
                         ),
                       ),
                       const SizedBox(height: 4),
@@ -96,21 +143,48 @@ class _HostelListTileState extends State<HostelListTile> {
                               'rooms': [
                                 {
                                   'type': 'Single Room',
-                                  'price': 25,
-                                  'image': widget.imagePath,
-                                  'video': 'assets/single_room.mp4',
+                                  'price': 250000,
+                                  'desc': 'Ideal for individual students',
+                                  'images': [
+                                    'assets/hostel1.jpg',
+                                    'assets/hostel2.jpg',
+                                    'assets/hostel3.jpg',
+                                    'assets/hostel4.jpeg',
+                                    'assets/hostel5.jpg',
+                                    'assets/hostel1.jpg',
+                                  ],
+                                  'available': 3,
+                                  'total': 5,
                                 },
                                 {
                                   'type': 'Double Room',
-                                  'price': 40,
-                                  'image': widget.imagePath,
-                                  'video': 'assets/double_room.mp4',
+                                  'price': 400000,
+                                  'desc': 'Suitable for sharing with a roommate',
+                                  'images': [
+                                    'assets/hostel2.jpg',
+                                    'assets/hostel3.jpg',
+                                    'assets/hostel4.jpeg',
+                                    'assets/hostel5.jpg',
+                                    'assets/hostel1.jpg',
+                                    'assets/hostel2.jpg',
+                                  ],
+                                  'available': 0,
+                                  'total': 4,
                                 },
                                 {
                                   'type': 'Triple Room',
-                                  'price': 55,
-                                  'image': widget.imagePath,
-                                  'video': 'assets/triple_room.mp4',
+                                  'price': 550000,
+                                  'desc': 'Spacious for three students',
+                                  'images': [
+                                    'assets/hostel3.jpg',
+                                    'assets/hostel4.jpeg',
+                                    'assets/hostel5.jpg',
+                                    'assets/hostel1.jpg',
+                                    'assets/hostel2.jpg',
+                                    'assets/hostel3.jpg',
+                                  ],
+                                  'available': 2,
+                                  'total': 3,
                                 },
                               ],
                             },

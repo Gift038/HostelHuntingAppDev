@@ -2,13 +2,14 @@
 import 'package:flutter/material.dart';
 
 class HostelListScreen extends StatelessWidget {
-  final List<Map<String, dynamic>> hostels = [
-    {"name": "Greenwood Hostel", "price": "UGX 300,000", "image": "https://via.placeholder.com/150"},
-    {"name": "Kampala Hostel", "price": "UGX 350,000", "image": "https://via.placeholder.com/150"},
-  ];
+  const HostelListScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final List<Map<String, dynamic>> hostels = [
+      {"name": "Greenwood Hostel", "price": "UGX 300,000", "image": "https://via.placeholder.com/150"},
+      {"name": "Kampala Hostel", "price": "UGX 350,000", "image": "https://via.placeholder.com/150"},
+    ];
     return Scaffold(
       appBar: AppBar(title: Text("Matching Hostels")),
       body: ListView.builder(

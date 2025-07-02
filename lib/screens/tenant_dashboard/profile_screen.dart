@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
 
 class ProfileScreen extends StatelessWidget {
-  final Map<String, String> user = {
-    "name": "Ethan Carter",
-    "gender": "Male",
-    "email": "ethan@hostelhunt.com"
-  };
+  const ProfileScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final Map<String, String> user = {
+      "name": "Ethan Carter",
+      "gender": "Male",
+      "email": "ethan@hostelhunt.com"
+    };
     return Scaffold(
       appBar: AppBar(title: Text("Profile")),
       body: Padding(

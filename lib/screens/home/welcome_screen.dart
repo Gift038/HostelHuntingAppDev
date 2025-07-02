@@ -1,4 +1,5 @@
 import 'dart:ui';
+import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'home_page.dart';
@@ -12,8 +13,8 @@ class WelcomeScreen extends StatefulWidget {
 
 class _WelcomeScreenState extends State<WelcomeScreen>
     with SingleTickerProviderStateMixin {
-  late AnimationController _swingController;
-  late Animation<double> _swingAnimation;
+  late AnimationController _bounceController;
+  late Animation<double> _bounceAnimation;
 
   final Color coffeeBrown = const Color(0xFF4B2E05);
   final Color lightBrown = const Color(0xFFD7CCC8);
@@ -23,122 +24,87 @@ class _WelcomeScreenState extends State<WelcomeScreen>
   void initState() {
     super.initState();
 
-    _swingController = AnimationController(
+    _bounceController = AnimationController(
       vsync: this,
-      duration: const Duration(seconds: 3),
+      duration: const Duration(milliseconds: 900),
     )..repeat(reverse: true);
 
-    _swingAnimation = Tween<double>(begin: -0.05, end: 0.05).animate(
-      CurvedAnimation(parent: _swingController, curve: Curves.easeInOut),
+    _bounceAnimation = Tween<double>(begin: 0, end: -30).animate(
+      CurvedAnimation(parent: _bounceController, curve: Curves.easeInOutCubic),
     );
+
+    // Auto-navigate to HomeScreen after 20 seconds
+    Future.delayed(const Duration(seconds: 10), () {
+      if (mounted) {
+        Navigator.of(context).pushReplacement(
+          MaterialPageRoute(builder: (_) => const HomeScreen()),
+        );
+      }
+    });
   }
 
   @override
   void dispose() {
-    _swingController.dispose();
+    _bounceController.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Stack(
-        fit: StackFit.expand,
-        children: [
-          // Background image with blur
-          Image.asset(
-            'assets/hostel2.jpg',
-            fit: BoxFit.cover,
-          ),
-          BackdropFilter(
-            filter: ImageFilter.blur(sigmaX: 5, sigmaY: 5),
-            child: Container(
-              color: backgroundOverlay,
+      backgroundColor: const Color(0xFFD7BFA6),
+      body: Center(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            AnimatedBuilder(
+              animation: _bounceAnimation,
+              builder: (context, child) {
+                return Transform.translate(
+                  offset: Offset(0, _bounceAnimation.value),
+                  child: child,
+                );
+              },
+              child: Container(
+                decoration: BoxDecoration(
+                  color: Colors.white.withOpacity(0.85),
+                  shape: BoxShape.circle,
+                  boxShadow: [
+                    BoxShadow(
+                      color: coffeeBrown.withOpacity(0.18),
+                      blurRadius: 18,
+                      spreadRadius: 2,
+                    ),
+                  ],
+                ),
+                padding: const EdgeInsets.all(32),
+                child: Icon(
+                  Icons.home_rounded,
+                  color: coffeeBrown,
+                  size: 64,
+                ),
+              ),
             ),
-          ),
-
-          // Foreground content
-          Center(
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 24.0),
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  // Welcome Text with styled "HostelFinder"
-                  RichText(
-                    textAlign: TextAlign.center,
-                    text: TextSpan(
-                      style: const TextStyle(
-                        fontSize: 28,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.white,
-                        shadows: [
-                          Shadow(
-                            color: Colors.black54,
-                            blurRadius: 6,
-                            offset: Offset(1, 1),
-                          ),
-                        ],
-                      ),
-                      children: [
-                        const TextSpan(text: "Welcome to HostelFinder"),
-
-                      ],
-                    ),
-                  ),
-
-                  const SizedBox(height: 16),
-
-                  Text(
-                    'Find the best hostel around your university in Uganda',
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      fontSize: 16,
-                      color: lightBrown,
-                    ),
-                  ),
-
-                  const SizedBox(height: 40),
-
-                  // Animated dangling button
-                  AnimatedBuilder(
-                    animation: _swingAnimation,
-                    builder: (context, child) {
-                      return Transform.rotate(
-                        angle: _swingAnimation.value,
-                        child: child,
-                      );
-                    },
-                    child: ElevatedButton(
-                      onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (_) => const HomeScreen(),
-                          ),
-                        );
-                      },
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: coffeeBrown,
-                        foregroundColor: Colors.white,
-                        minimumSize: const Size(double.infinity, 50),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(14),
-                        ),
-                        elevation: 8,
-                        shadowColor: Colors.brown.withOpacity(0.7),
-                      ),
-                      child: const Text(
-                        'Get Started',
-                        style: TextStyle(fontSize: 18, letterSpacing: 1.1),
-                      ),
-                    ),
+            const SizedBox(height: 32),
+            Text(
+              'HostelFinder',
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                fontSize: 32,
+                fontWeight: FontWeight.bold,
+                color: coffeeBrown,
+                letterSpacing: 1.2,
+                shadows: const [
+                  Shadow(
+                    color: Colors.black26,
+                    blurRadius: 6,
+                    offset: Offset(1, 1),
                   ),
                 ],
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
