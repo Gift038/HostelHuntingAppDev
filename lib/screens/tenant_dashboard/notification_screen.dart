@@ -7,6 +7,8 @@ class NotificationScreen extends StatelessWidget {
     'New hostel listings available',
   ];
 
+  NotificationScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

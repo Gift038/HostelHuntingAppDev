@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
 class HostelDetailScreen extends StatelessWidget {
+  const HostelDetailScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     final hostel = ModalRoute.of(context)!.settings.arguments as Map;

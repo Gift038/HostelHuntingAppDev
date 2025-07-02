@@ -7,6 +7,8 @@ class ProfileScreen extends StatelessWidget {
     "email": "ethan@hostelhunt.com"
   };
 
+  ProfileScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

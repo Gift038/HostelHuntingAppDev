@@ -1,4 +1,3 @@
-import 'dart:async';
 import 'package:flutter/material.dart';
 import '../../widgets/hostel_card.dart';
 import '../../widgets/hostel_list_tile.dart';
@@ -180,7 +179,7 @@ class _TenantsDashboardScreenState extends State<TenantsDashboardScreen>
                       style: TextStyle(
                         fontSize: 20,
                         fontWeight: FontWeight.bold,
-                        color: Colors.brown,
+                        color: Color.fromRGBO(121, 85, 72, 1),
                       ),
                     ),
                     SizedBox(height: 2),

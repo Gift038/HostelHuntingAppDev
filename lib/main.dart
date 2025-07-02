@@ -7,8 +7,9 @@ import 'screens/tenant_dashboard/hostel_detail_screen.dart';
 import 'screens/tenant_dashboard/booking_screen.dart';
 import 'screens/tenant_dashboard/payment_screen.dart';
 import 'screens/tenant_dashboard/notification_screen.dart';
+import 'screens/manager_dashboard/payments_screen.dart';
 import 'screens/tenant_dashboard/profile_screen.dart';
-
+import 'screens/manager_dashboard/addresident_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
 
@@ -50,10 +51,13 @@ class HostelHuntApp extends StatelessWidget {
         '/results': (context) => HostelListScreen(),
         '/hostel_detail': (context) => HostelDetailScreen(),
         '/booking': (context) => BookingScreen(),
-        '/payment': (context) => PaymentScreen(),
+        '/tenantPayment': (context) => PaymentScreen(),
+        '/managerPayment': (context) => PaymentsScreen(),
         '/notifications': (context) => NotificationScreen(),
         '/profile': (context) => ProfileScreen(),
+        '/addresident': (context) => AddResidentScreen(),
       },
+      //home: const PaymentsScreen()
     );
   }
 }
