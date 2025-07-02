@@ -163,7 +163,7 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                       subtitle: 'Find hostels near UCU',
                     ),
                     HostelCard(
-                      imagePath: 'assets/hostel4.jpg',
+                      imagePath: 'assets/hostel1.jpg',
                       title: 'Busitema University Hostels',
                       subtitle: 'Find hostels near Busitema University',
                     ),

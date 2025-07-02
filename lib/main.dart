@@ -9,7 +9,8 @@ import 'screens/tenant_dashboard/payment_screen.dart';
 import 'screens/tenant_dashboard/notification_screen.dart';
 import 'screens/manager_dashboard/payments_screen.dart';
 import 'screens/tenant_dashboard/profile_screen.dart';
-import 'screens/manager_dashboard/addresident_screen.dart';
+import 'screens/home/virtual_tours.dart';
+
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
 
@@ -43,6 +44,7 @@ class HostelHuntApp extends StatelessWidget {
     return MaterialApp(
       title: 'HostelHunt',
       debugShowCheckedModeBanner: false,
+
       initialRoute: '/',
       routes: {
         '/': (context) => const WelcomeScreen(),
@@ -55,9 +57,8 @@ class HostelHuntApp extends StatelessWidget {
         '/managerPayment': (context) => PaymentsScreen(),
         '/notifications': (context) => NotificationScreen(),
         '/profile': (context) => ProfileScreen(),
-        '/addresident': (context) => AddResidentScreen(),
+        '/virtual-tours': (context) => const VirtualToursScreen(),
       },
-      //home: const PaymentsScreen()
     );
   }
 }

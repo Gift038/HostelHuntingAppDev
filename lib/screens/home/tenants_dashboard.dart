@@ -85,9 +85,10 @@ class _TenantsDashboardScreenState extends State<TenantsDashboardScreen>
     return Scaffold(
       appBar: AppBar(
         title: const Text("Tenant's Dashboard"),
-        backgroundColor: coffeeBrown,
-        foregroundColor: Colors.white,
+        backgroundColor: const Color(0xFFF8F5F2),
+        foregroundColor: Colors.brown,
       ),
+      backgroundColor: const Color(0xFFF8F5F2),
       body: CustomScrollView(
         slivers: [
           SliverToBoxAdapter(
@@ -128,36 +129,107 @@ class _TenantsDashboardScreenState extends State<TenantsDashboardScreen>
               child: ListView(
                 controller: _scrollController,
                 scrollDirection: Axis.horizontal,
-                children: const [
+                children: [
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.pushNamed(
+                        context,
+                        '/search_filter',
+                        arguments: {'university': 'Makerere University'},
+                      );
+                    },
+                    child: const HostelCard(
+                      imagePath: 'assets/hostel1.jpg',
+                      title: 'Makerere University Hostels',
+                      subtitle: 'Find hostels near Makerere University',
+                    ),
+                  ),
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.pushNamed(
+                        context,
+                        '/search_filter',
+                        arguments: {'university': 'Kyambogo University'},
+                      );
+                    },
+                    child: const HostelCard(
+                      imagePath: 'assets/hostel2.jpg',
+                      title: 'Kyambogo University Hostels',
+                      subtitle: 'Find hostels near Kyambogo University',
+                    ),
+                  ),
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.pushNamed(
+                        context,
+                        '/search_filter',
+                        arguments: {'university': 'Uganda Christian University'},
+                      );
+                    },
+                    child: const HostelCard(
+                      imagePath: 'assets/hostel3.jpg',
+                      title: 'Uganda Christian University Hostels',
+                      subtitle: 'Find hostels near UCU',
+                    ),
+                  ),
+<<<<<<< HEAD
                   HostelCard(
                     imagePath: 'assets/hostel1.jpg',
-                    title: 'Makerere University Hostels',
-                    subtitle: 'Find hostels near Makerere University',
-                  ),
-                  HostelCard(
-                    imagePath: 'assets/hostel2.jpg',
-                    title: 'Kyambogo University Hostels',
-                    subtitle: 'Find hostels near Kyambogo University',
-                  ),
-                  HostelCard(
-                    imagePath: 'assets/hostel3.jpg',
-                    title: 'Uganda Christian University Hostels',
-                    subtitle: 'Find hostels near UCU',
-                  ),
-                  HostelCard(
-                    imagePath: 'assets/hostel5.jpg',
                     title: 'Victoria University Hostels',
                     subtitle: 'Find hostels near Victoria University',
                   ),
                   HostelCard(
-                    imagePath: 'assets/hostel6.jpg',
+                    imagePath: 'assets/hostel1.jpg',
                     title: 'Ndejje University Hostels',
                     subtitle: 'Find hostels near Ndejje University',
                   ),
                   HostelCard(
-                    imagePath: 'assets/hostel4.jpg',
+                    imagePath: 'assets/hostel1.jpg',
                     title: 'Busitema University Hostels',
                     subtitle: 'Find hostels near Busitema University',
+=======
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.pushNamed(
+                        context,
+                        '/search_filter',
+                        arguments: {'university': 'Victoria University'},
+                      );
+                    },
+                    child: const HostelCard(
+                      imagePath: 'assets/hostel5.jpg',
+                      title: 'Victoria University Hostels',
+                      subtitle: 'Find hostels near Victoria University',
+                    ),
+                  ),
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.pushNamed(
+                        context,
+                        '/search_filter',
+                        arguments: {'university': 'Ndejje University'},
+                      );
+                    },
+                    child: const HostelCard(
+                      imagePath: 'assets/hostel6.jpg',
+                      title: 'Ndejje University Hostels',
+                      subtitle: 'Find hostels near Ndejje University',
+                    ),
+                  ),
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.pushNamed(
+                        context,
+                        '/search_filter',
+                        arguments: {'university': 'Busitema University'},
+                      );
+                    },
+                    child: const HostelCard(
+                      imagePath: 'assets/hostel4.jpg',
+                      title: 'Busitema University Hostels',
+                      subtitle: 'Find hostels near Busitema University',
+                    ),
+>>>>>>> 6c570f935758509c77344a5e6446c1e61fe03ab4
                   ),
                 ],
               ),
@@ -242,21 +314,25 @@ class _TenantsDashboardScreenState extends State<TenantsDashboardScreen>
                 ),
               ),
               HostelListTile(
-                imagePath: 'assets/hostel5.jpg',
+                imagePath: 'assets/hostel1.jpg',
                 name: 'Scholars Inn',
                 rating: 4.9,
                 reviews: 135,
                 price: 28,
               ),
               HostelListTile(
-                imagePath: 'assets/hostel4.jpg',
+<<<<<<< HEAD
+                imagePath: 'assets/hostel1.jpg',
+=======
+                imagePath: 'assets/hostel4.jpeg',
+>>>>>>> 6c570f935758509c77344a5e6446c1e61fe03ab4
                 name: 'Academic Suites',
                 rating: 4.7,
                 reviews: 110,
                 price: 35,
               ),
               HostelListTile(
-                imagePath: 'assets/hostel6.jpg',
+                imagePath: 'assets/hostel1.jpg',
                 name: 'Victoria Residence',
                 rating: 4.4,
                 reviews: 90,
