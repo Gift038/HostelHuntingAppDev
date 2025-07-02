@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import '../../widgets/hostel_card.dart';
 import '../../widgets/hostel_list_tile.dart';
+import '../tenant_dashboard/profile_screen.dart';
+import 'package:provider/provider.dart';
+import '../../main.dart';
 
 class TenantsDashboardScreen extends StatefulWidget {
   const TenantsDashboardScreen({super.key});
@@ -63,16 +66,26 @@ class _TenantsDashboardScreenState extends State<TenantsDashboardScreen>
       _currentIndex = index;
     });
 
-    // Navigation logic here
     switch (index) {
       case 0:
-      // Already on dashboard
+        // Already on dashboard
         break;
       case 1:
         Navigator.pushNamed(context, '/notifications');
         break;
       case 2:
-        Navigator.pushNamed(context, '/profile');
+        final userProvider = Provider.of<UserProvider>(context, listen: false);
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => ProfileScreen(
+              name: userProvider.name,
+              contact: userProvider.contact,
+              gender: userProvider.gender,
+              email: userProvider.email,
+            ),
+          ),
+        );
         break;
       case 3:
         Navigator.pushNamed(context, '/documents');
@@ -84,9 +97,16 @@ class _TenantsDashboardScreenState extends State<TenantsDashboardScreen>
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Tenant's Dashboard"),
+        title: Text(
+          'Tenant\'s Dashboard',
+          style: const TextStyle(
+            color: Color(0xFF4B2E05),
+            fontWeight: FontWeight.bold,
+            fontSize: 20,
+          ),
+        ),
         backgroundColor: const Color(0xFFF8F5F2),
-        foregroundColor: Colors.brown,
+        foregroundColor: const Color(0xFF4B2E05),
       ),
       backgroundColor: const Color(0xFFF8F5F2),
       body: CustomScrollView(

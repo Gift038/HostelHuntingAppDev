@@ -14,6 +14,22 @@ import 'screens/maps.dart';
 
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
+import 'package:provider/provider.dart';
+
+class UserProvider extends ChangeNotifier {
+  String name = '';
+  String contact = '';
+  String gender = '';
+  String email = '';
+
+  void setUser({required String name, required String contact, required String gender, required String email}) {
+    this.name = name;
+    this.contact = contact;
+    this.gender = gender;
+    this.email = email;
+    notifyListeners();
+  }
+}
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -33,8 +49,12 @@ void main() async {
     await Firebase.initializeApp();
   }
   
-  runApp(const HostelHuntApp());
-
+  runApp(
+    ChangeNotifierProvider(
+      create: (_) => UserProvider(),
+      child: const HostelHuntApp(),
+    ),
+  );
 } 
 
 class HostelHuntApp extends StatelessWidget {
@@ -55,7 +75,6 @@ class HostelHuntApp extends StatelessWidget {
         '/booking': (context) => BookingScreen(),
         '/payment': (context) => PaymentScreen(),
         '/notifications': (context) => NotificationScreen(),
-        '/profile': (context) => ProfileScreen(),
         '/virtual-tours': (context) => const VirtualToursScreen(),
         '/documents': (context) => const TenantDocumentScreen(),
         '/maps': (context) => const MapsScreen(),

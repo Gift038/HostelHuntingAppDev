@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import '../home/tenants_dashboard.dart';
 import '../home/managers_dashboard.dart';
+import 'package:provider/provider.dart';
+import '../../main.dart';
 
 class RegisterAccountScreen extends StatefulWidget {
   const RegisterAccountScreen({super.key});
@@ -190,10 +192,16 @@ class _RegisterAccountScreenState extends State<RegisterAccountScreen> {
                 ),
                 onPressed: () {
                   if (_formKey.currentState?.validate() ?? false) {
+                    Provider.of<UserProvider>(context, listen: false).setUser(
+                      name: _name,
+                      contact: _contact,
+                      gender: _gender,
+                      email: _contact, // or use a separate email field if available
+                    );
                     if (_role == 'Tenant') {
                       Navigator.pushReplacement(
                         context,
-                        MaterialPageRoute(builder: (context) => const TenantsDashboardScreen()),
+                        MaterialPageRoute(builder: (context) => TenantsDashboardScreen()),
                       );
                     } else {
                       Navigator.pushReplacement(
