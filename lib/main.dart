@@ -12,6 +12,15 @@ import 'screens/home/virtual_tours.dart';
 
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+
+Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
+  await Firebase.initializeApp();
+  // You can handle background notification logic here, e.g., show a local notification
+  // or update Firestore, etc.
+  print('Handling a background message: ${message.messageId}');
+}
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -31,8 +40,17 @@ void main() async {
     await Firebase.initializeApp();
   }
   
-  runApp(const HostelHuntApp());
+  FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
 
+  // Optionally configure local notifications for foreground display
+  final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
+  const AndroidInitializationSettings initializationSettingsAndroid = AndroidInitializationSettings('@mipmap/ic_launcher');
+  final InitializationSettings initializationSettings = InitializationSettings(
+    android: initializationSettingsAndroid,
+  );
+  await flutterLocalNotificationsPlugin.initialize(initializationSettings);
+
+  runApp(const HostelHuntApp());
 } 
 
 class HostelHuntApp extends StatelessWidget {
@@ -43,9 +61,6 @@ class HostelHuntApp extends StatelessWidget {
     return MaterialApp(
       title: 'HostelHunt',
       debugShowCheckedModeBanner: false,
-<<<<<<< HEAD
-      home: DemoProfileScreen(),
-=======
       initialRoute: '/',
       routes: {
         '/': (context) => const WelcomeScreen(),
@@ -55,11 +70,10 @@ class HostelHuntApp extends StatelessWidget {
         '/hostel_detail': (context) => HostelDetailScreen(),
         '/booking': (context) => BookingScreen(),
         '/payment': (context) => PaymentScreen(),
-        '/notifications': (context) => NotificationScreen(),
-        '/profile': (context) => ProfileScreen(),
+        '/notifications': (context) => NotificationsScreen(),
+        '/profile': (context) => DemoProfileScreen(),
         '/virtual-tours': (context) => const VirtualToursScreen(),
       },
->>>>>>> 6c570f935758509c77344a5e6446c1e61fe03ab4
     );
   }
 }
