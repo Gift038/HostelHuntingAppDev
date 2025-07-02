@@ -40,6 +40,16 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
   String? get userId => FirebaseAuth.instance.currentUser?.uid;
   late final FirebaseMessaging _messaging;
 
+  // Notification categories with icons
+  final List<Map<String, dynamic>> _categories = [
+    {'label': 'All', 'icon': Icons.all_inclusive},
+    {'label': 'Booking Status', 'icon': Icons.check_circle_outline},
+    {'label': 'Check-in Reminder', 'icon': Icons.calendar_today},
+    {'label': 'Hostel Update', 'icon': Icons.notifications},
+    {'label': 'New Review', 'icon': Icons.star_border},
+  ];
+  String _selectedCategory = 'All';
+
   @override
   void initState() {
     super.initState();
@@ -64,6 +74,22 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
     });
   }
 
+  List<NotificationItem> _filterNotifications(List<NotificationItem> notifications) {
+    switch (_selectedCategory) {
+      case 'Booking Status':
+        return notifications.where((n) => n.type == 'booking_confirmed' || n.type == 'booking_canceled').toList();
+      case 'Check-in Reminder':
+        return notifications.where((n) => n.type == 'checkin_reminder').toList();
+      case 'Hostel Update':
+        return notifications.where((n) => n.type == 'hostel_update').toList();
+      case 'New Review':
+        return notifications.where((n) => n.type == 'new_review').toList();
+      case 'All':
+      default:
+        return notifications;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     if (userId == null) {
@@ -82,71 +108,101 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
         backgroundColor: coffeeBrown,
         foregroundColor: Colors.white,
       ),
-      body: StreamBuilder<QuerySnapshot>(
-        stream: FirebaseFirestore.instance
-            .collection('users')
-            .doc(userId)
-            .collection('notifications')
-            .orderBy('timestamp', descending: true)
-            .snapshots(),
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return const Center(child: CircularProgressIndicator());
-          }
-          if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
-            return const Center(child: Text('No notifications'));
-          }
-          final notifications = snapshot.data!.docs
-              .map((doc) => NotificationItem.fromFirestore(doc.data() as Map<String, dynamic>))
-              .toList();
-
-          return ListView.separated(
-            padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 12),
-            itemCount: notifications.length,
-            separatorBuilder: (_, __) => const SizedBox(height: 8),
-            itemBuilder: (context, index) {
-              final notif = notifications[index];
-              return Card(
-                color: Colors.white,
-                child: ListTile(
-                  leading: Icon(_getIcon(notif.type), color: coffeeBrown),
-                  title: Text(
-                    notif.title,
-                    style: const TextStyle(fontWeight: FontWeight.bold, color: coffeeBrown),
-                  ),
-                  subtitle: Text(
-                    notif.body,
-                    style: const TextStyle(color: Colors.brown),
-                  ),
-                  trailing: Text(
-                    '${notif.timestamp.hour}:${notif.timestamp.minute}',
-                    style: const TextStyle(fontSize: 12, color: Colors.grey),
+      body: Column(
+        children: [
+          // Category filter chips (modern horizontal scrollable row)
+          SingleChildScrollView(
+            scrollDirection: Axis.horizontal,
+            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 12),
+            child: Row(
+              children: _categories.map((cat) => Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 4),
+                child: ChoiceChip(
+                  avatar: Icon(cat['icon'], size: 20, color: _selectedCategory == cat['label'] ? Colors.white : coffeeBrown),
+                  label: Text(cat['label']),
+                  selected: _selectedCategory == cat['label'],
+                  onSelected: (selected) {
+                    if (selected) setState(() => _selectedCategory = cat['label']);
+                  },
+                  selectedColor: coffeeBrown,
+                  backgroundColor: lightCoffee,
+                  labelStyle: TextStyle(
+                    color: _selectedCategory == cat['label'] ? Colors.white : coffeeBrown,
+                    fontWeight: FontWeight.bold,
                   ),
                 ),
-              );
-            },
-          );
-        },
+              )).toList(),
+            ),
+          ),
+          Expanded(
+            child: StreamBuilder<QuerySnapshot>(
+              stream: FirebaseFirestore.instance
+                  .collection('users')
+                  .doc(userId)
+                  .collection('notifications')
+                  .orderBy('timestamp', descending: true)
+                  .snapshots(),
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return const Center(child: CircularProgressIndicator());
+                }
+                if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
+                  return const Center(child: Text('No notifications'));
+                }
+                final notifications = snapshot.data!.docs
+                    .map((doc) => NotificationItem.fromFirestore(doc.data() as Map<String, dynamic>))
+                    .toList();
+                final filtered = _filterNotifications(notifications);
+                return ListView.separated(
+                  padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 12),
+                  itemCount: filtered.length,
+                  separatorBuilder: (_, __) => const SizedBox(height: 8),
+                  itemBuilder: (context, index) {
+                    final notif = filtered[index];
+                    return Card(
+                      color: Colors.white,
+                      child: ListTile(
+                        leading: Icon(_getIcon(notif.type), color: coffeeBrown),
+                        title: Text(
+                          notif.title,
+                          style: const TextStyle(fontWeight: FontWeight.bold, color: coffeeBrown),
+                        ),
+                        subtitle: Text(
+                          notif.body,
+                          style: const TextStyle(color: Colors.brown),
+                        ),
+                        trailing: Text(
+                          '${notif.timestamp.hour}:${notif.timestamp.minute}',
+                          style: const TextStyle(fontSize: 12, color: Colors.grey),
+                        ),
+                      ),
+                    );
+                  },
+                );
+              },
+            ),
+          ),
+        ],
       ),
       bottomNavigationBar: BottomNavigationBar(
-        backgroundColor: Colors.brown[100],
+        backgroundColor: coffeeBrown,
         type: BottomNavigationBarType.fixed,
-        selectedItemColor: coffeeBrown,
+        selectedItemColor: Colors.white,
         unselectedItemColor: lightCoffee,
         currentIndex: 1, // Notifications tab
         onTap: (index) {
           switch (index) {
             case 0:
-              Navigator.pushReplacementNamed(context, '/dashboard');
+              Navigator.pushReplacementNamed(context, '/dashboard'); // Home
               break;
             case 1:
               // Already on notifications
               break;
             case 2:
-              Navigator.pushReplacementNamed(context, '/profile');
+              Navigator.pushReplacementNamed(context, '/profile'); // Profile
               break;
             case 3:
-              Navigator.pushReplacementNamed(context, '/manager');
+              Navigator.pushReplacementNamed(context, '/manager'); // Manager
               break;
           }
         },

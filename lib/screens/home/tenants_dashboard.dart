@@ -173,22 +173,6 @@ class _TenantsDashboardScreenState extends State<TenantsDashboardScreen>
                       subtitle: 'Find hostels near UCU',
                     ),
                   ),
-<<<<<<< HEAD
-                  HostelCard(
-                    imagePath: 'assets/hostel1.jpg',
-                    title: 'Victoria University Hostels',
-                    subtitle: 'Find hostels near Victoria University',
-                  ),
-                  HostelCard(
-                    imagePath: 'assets/hostel1.jpg',
-                    title: 'Ndejje University Hostels',
-                    subtitle: 'Find hostels near Ndejje University',
-                  ),
-                  HostelCard(
-                    imagePath: 'assets/hostel1.jpg',
-                    title: 'Busitema University Hostels',
-                    subtitle: 'Find hostels near Busitema University',
-=======
                   GestureDetector(
                     onTap: () {
                       Navigator.pushNamed(
@@ -230,7 +214,6 @@ class _TenantsDashboardScreenState extends State<TenantsDashboardScreen>
                       title: 'Busitema University Hostels',
                       subtitle: 'Find hostels near Busitema University',
                     ),
->>>>>>> 6c570f935758509c77344a5e6446c1e61fe03ab4
                   ),
                 ],
               ),
@@ -322,11 +305,7 @@ class _TenantsDashboardScreenState extends State<TenantsDashboardScreen>
                 price: 28,
               ),
               HostelListTile(
-<<<<<<< HEAD
-                imagePath: 'assets/hostel1.jpg',
-=======
                 imagePath: 'assets/hostel4.jpeg',
->>>>>>> 6c570f935758509c77344a5e6446c1e61fe03ab4
                 name: 'Academic Suites',
                 rating: 4.7,
                 reviews: 110,

@@ -9,6 +9,7 @@ import 'screens/tenant_dashboard/payment_screen.dart';
 import 'screens/tenant_dashboard/notification_screen.dart';
 import 'screens/tenant_dashboard/profile_screen.dart';
 import 'screens/home/virtual_tours.dart';
+import 'screens/home/managers_dashboard.dart';
 
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
@@ -73,6 +74,7 @@ class HostelHuntApp extends StatelessWidget {
         '/notifications': (context) => NotificationsScreen(),
         '/profile': (context) => DemoProfileScreen(),
         '/virtual-tours': (context) => const VirtualToursScreen(),
+        '/manager': (context) => ManagerDashboard(),
       },
     );
   }
