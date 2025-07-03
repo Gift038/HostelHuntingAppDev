@@ -25,20 +25,30 @@ class VirtualToursScreen extends StatelessWidget {
       body: ListView(
         padding: const EdgeInsets.all(0),
         children: [
-          // Top Hostel Card (no Book Now button)
-          if (rooms.isNotEmpty && rooms[0]['image'] != null)
-            ClipRRect(
-              borderRadius: const BorderRadius.only(
-                bottomLeft: Radius.circular(0),
-                bottomRight: Radius.circular(0),
-              ),
-              child: Image.asset(
-                rooms[0]['image'],
-                height: 200,
-                width: double.infinity,
-                fit: BoxFit.cover,
+          // Hostel Images Carousel Card
+          Padding(
+            padding: const EdgeInsets.fromLTRB(20, 20, 20, 0),
+            child: Card(
+              color: Colors.white,
+              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+              elevation: 2,
+              child: Padding(
+                padding: const EdgeInsets.all(12),
+                child: _HostelImageCarousel(
+                  images: (args != null && args['hostelImages'] != null && (args['hostelImages'] as List).isNotEmpty)
+                      ? List<String>.from(args['hostelImages'])
+                      : [
+                          'assets/hostel1.jpg',
+                          'assets/hostel2.jpg',
+                          'assets/hostel3.jpg',
+                          'assets/hostel4.jpeg',
+                          'assets/hostel5.jpg',
+                          'assets/hostel6.jpg',
+                        ],
+                ),
               ),
             ),
+          ),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
             child: Card(
@@ -71,7 +81,7 @@ class VirtualToursScreen extends StatelessWidget {
                     ...rooms.map<Widget>((room) => _RoomOptionCard(room: room, coffeeBrown: coffeeBrown, lightCoffeeBrown: lightCoffeeBrown, showBooking: false)),
                     const SizedBox(height: 24),
                     Text('Amenities', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18, color: coffeeBrown)),
-                    const SizedBox(height: 12),
+                    const SizedBox(height: 8),
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -81,54 +91,63 @@ class VirtualToursScreen extends StatelessWidget {
                           coffeeBrown: coffeeBrown,
                           lightCoffeeBrown: lightCoffeeBrown,
                         ),
+                        const SizedBox(height: 2),
                         _AmenityCheckbox(
                           label: 'Gym',
                           checked: amenities.contains('Gym'),
                           coffeeBrown: coffeeBrown,
                           lightCoffeeBrown: lightCoffeeBrown,
                         ),
+                        const SizedBox(height: 2),
                         _AmenityCheckbox(
                           label: 'Parking Space',
                           checked: amenities.contains('Parking Space'),
                           coffeeBrown: coffeeBrown,
                           lightCoffeeBrown: lightCoffeeBrown,
                         ),
+                        const SizedBox(height: 2),
                         _AmenityCheckbox(
                           label: 'Wi-Fi',
                           checked: amenities.contains('Wi-Fi'),
                           coffeeBrown: coffeeBrown,
                           lightCoffeeBrown: lightCoffeeBrown,
                         ),
+                        const SizedBox(height: 2),
                         _AmenityCheckbox(
                           label: 'Laundry Room',
                           checked: amenities.contains('Laundry Room'),
                           coffeeBrown: coffeeBrown,
                           lightCoffeeBrown: lightCoffeeBrown,
                         ),
+                        const SizedBox(height: 2),
                         _AmenityCheckbox(
                           label: 'Hang Line',
                           checked: amenities.contains('Hang Line'),
                           coffeeBrown: coffeeBrown,
                           lightCoffeeBrown: lightCoffeeBrown,
                         ),
+                        const SizedBox(height: 2),
                         _AmenityCheckbox(
                           label: 'Study Room',
                           checked: amenities.contains('Study Room'),
                           coffeeBrown: coffeeBrown,
                           lightCoffeeBrown: lightCoffeeBrown,
                         ),
+                        const SizedBox(height: 2),
                         _AmenityCheckbox(
                           label: 'Shared Kitchen',
                           checked: amenities.contains('Shared Kitchen'),
                           coffeeBrown: coffeeBrown,
                           lightCoffeeBrown: lightCoffeeBrown,
                         ),
+                        const SizedBox(height: 2),
                         _AmenityCheckbox(
                           label: 'Playground',
                           checked: amenities.contains('Playground'),
                           coffeeBrown: coffeeBrown,
                           lightCoffeeBrown: lightCoffeeBrown,
                         ),
+                        const SizedBox(height: 2),
                         _AmenityCheckbox(
                           label: 'Enhanced Security',
                           checked: amenities.contains('Enhanced Security'),
@@ -136,6 +155,25 @@ class VirtualToursScreen extends StatelessWidget {
                           lightCoffeeBrown: lightCoffeeBrown,
                         ),
                       ],
+                    ),
+                    const SizedBox(height: 24),
+                    Text('Location', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18, color: coffeeBrown)),
+                    const SizedBox(height: 12),
+                    Container(
+                      height: 200,
+                      width: double.infinity,
+                      decoration: BoxDecoration(
+                        color: Colors.grey[300],
+                        borderRadius: BorderRadius.circular(12),
+                        border: Border.all(color: coffeeBrown.withOpacity(0.2)),
+                      ),
+                      child: Center(
+                        child: Text(
+                          'Google Map Placeholder\n(${location.isNotEmpty ? location : 'Hostel Location'})',
+                          textAlign: TextAlign.center,
+                          style: TextStyle(color: coffeeBrown, fontWeight: FontWeight.w600, fontSize: 16),
+                        ),
+                      ),
                     ),
                   ],
                 ),
@@ -387,24 +425,91 @@ class _AmenityCheckbox extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 8),
-      child: Row(
-        children: [
-          Container(
-            width: 28,
-            height: 28,
-            decoration: BoxDecoration(
-              border: Border.all(color: lightCoffeeBrown, width: 2),
-              borderRadius: BorderRadius.circular(6),
-              color: checked ? lightCoffeeBrown.withOpacity(0.1) : Colors.white,
-            ),
-            child: checked
-                ? Icon(Icons.check, color: coffeeBrown, size: 20)
-                : null,
+    return Row(
+      children: [
+        Icon(
+          checked ? Icons.check_box : Icons.check_box_outline_blank,
+          color: checked ? coffeeBrown : lightCoffeeBrown,
+          size: 18,
+        ),
+        const SizedBox(width: 8),
+        Text(
+          label,
+          style: TextStyle(
+            fontSize: 13,
+            color: checked ? coffeeBrown : Colors.black87,
+            fontWeight: FontWeight.w500,
           ),
-          const SizedBox(width: 12),
-          Text(label, style: const TextStyle(fontSize: 18, color: Colors.black, fontWeight: FontWeight.w400)),
+        ),
+      ],
+    );
+  }
+}
+
+class _HostelImageCarousel extends StatefulWidget {
+  final List<String> images;
+  const _HostelImageCarousel({required this.images});
+
+  @override
+  State<_HostelImageCarousel> createState() => _HostelImageCarouselState();
+}
+
+class _HostelImageCarouselState extends State<_HostelImageCarousel> {
+  int _current = 0;
+  Timer? _timer;
+
+  @override
+  void initState() {
+    super.initState();
+    _timer = Timer.periodic(const Duration(seconds: 3), (timer) {
+      setState(() {
+        _current = (_current + 1) % widget.images.length;
+      });
+    });
+  }
+
+  @override
+  void dispose() {
+    _timer?.cancel();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      height: 180,
+      child: Stack(
+        alignment: Alignment.bottomCenter,
+        children: [
+          ClipRRect(
+            borderRadius: BorderRadius.circular(12),
+            child: Image.asset(
+              widget.images[_current],
+              width: double.infinity,
+              height: 180,
+              fit: BoxFit.cover,
+            ),
+          ),
+          Positioned(
+            bottom: 8,
+            left: 0,
+            right: 0,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: List.generate(widget.images.length, (index) =>
+                Container(
+                  margin: const EdgeInsets.symmetric(horizontal: 2),
+                  width: 8,
+                  height: 8,
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: _current == index ? Colors.white : Colors.white54,
+                    border: Border.all(color: Colors.black12),
+                  ),
+                ),
+              ),
+            ),
+          ),
         ],
       ),
     );

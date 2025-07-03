@@ -34,7 +34,7 @@ class _WelcomeScreenState extends State<WelcomeScreen>
     );
 
     // Auto-navigate to HomeScreen after 20 seconds
-    Future.delayed(const Duration(seconds: 10), () {
+    Future.delayed(const Duration(seconds: 5), () {
       if (mounted) {
         Navigator.of(context).pushReplacement(
           MaterialPageRoute(builder: (_) => const HomeScreen()),

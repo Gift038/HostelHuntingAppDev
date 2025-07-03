@@ -91,37 +91,13 @@ class _HostelListTileState extends State<HostelListTile> {
                         ),
                       ),
                       const SizedBox(height: 4),
-                      GestureDetector(
-                        onTap: () {
-                          Navigator.pushNamed(
-                            context,
-                            '/maps',
-                            arguments: {
-                              'university': widget.details,
-                              'hostels': [
-                                {
-                                  'name': widget.name,
-                                  'imagePath': widget.imagePath,
-                                }
-                              ],
-                            },
-                          );
-                        },
-                        child: Row(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            Icon(Icons.location_on, color: const Color(0xFF9C7A5F), size: 18),
-                            const SizedBox(width: 4),
-                            Text(
-                              widget.details,
-                              style: TextStyle(
-                                color: const Color(0xFF9C7A5F),
-                                fontWeight: FontWeight.bold,
-                                fontSize: 15,
-                                decoration: TextDecoration.none,
-                              ),
-                            ),
-                          ],
+                      Text(
+                        widget.details,
+                        style: TextStyle(
+                          color: const Color(0xFF9C7A5F),
+                          fontWeight: FontWeight.bold,
+                          fontSize: 15,
+                          decoration: TextDecoration.none,
                         ),
                       ),
                       const SizedBox(height: 4),

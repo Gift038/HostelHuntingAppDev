@@ -70,16 +70,10 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
       case 1:
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => const NotificationsScreen()),
-        );
-        break;
-      case 2:
-        Navigator.push(
-          context,
           MaterialPageRoute(builder: (context) => const TenantsDashboardScreen()),
         );
         break;
-      case 3:
+      case 2:
         Navigator.push(
           context,
           MaterialPageRoute(builder: (context) => const ManagerDashboard()),
@@ -299,18 +293,16 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
             label: 'Home',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.notifications),
-            label: 'Notifications',
-          ),
-          BottomNavigationBarItem(
             icon: Icon(Icons.person),
-            label: "Tenant's \nDashboard",
+            label: "Tenant Dashboard",
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.cases_rounded),
-            label: "Manager's \nDashboard",
+            label: "Manager Dashboard",
           ),
         ],
+        selectedLabelStyle: TextStyle(fontSize: 12),
+        unselectedLabelStyle: TextStyle(fontSize: 12),
       ),
     );
   }
