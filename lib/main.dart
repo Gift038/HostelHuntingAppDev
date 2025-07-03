@@ -6,11 +6,13 @@ import 'screens/tenant_dashboard/hostel_list_screen.dart';
 import 'screens/tenant_dashboard/hostel_detail_screen.dart';
 import 'screens/tenant_dashboard/booking_screen.dart';
 import 'screens/tenant_dashboard/payment_screen.dart';
-import 'screens/tenant_dashboard/notification_screen.dart';
+import 'screens/tenant_dashboard/notification_screen.dart' as tenant;
+import 'screens/manager_dashboard/notification_screen.dart' as manager;
 import 'screens/manager_dashboard/payments_screen.dart';
 import 'screens/tenant_dashboard/profile_screen.dart';
 import 'screens/home/virtual_tours.dart';
 import 'screens/home/managers_dashboard.dart';
+import 'screens/manager_dashboard/room_management_screen.dart';
 
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
@@ -35,7 +37,7 @@ void main() async {
         appId: "1:358026434934:web:cd8fd7be2fdc629af14257",
         messagingSenderId:"358026434934" ,
         projectId: "hostel-hunt-d3f9d",
-        storageBucket: "hostel-hunt-d3f9d.firebasestorage.app",
+        storageBucket: "hostel-hunt-d3f9d.appspot.com",
       ),
     );
   } else {
@@ -63,10 +65,6 @@ class HostelHuntApp extends StatelessWidget {
     return MaterialApp(
       title: 'HostelHunt',
       debugShowCheckedModeBanner: false,
-<<<<<<< HEAD
-=======
-
->>>>>>> 9bc979c30b8a5fedccad210e58fd64f1bd4d58a5
       initialRoute: '/',
       routes: {
         '/': (context) => const WelcomeScreen(),
@@ -75,18 +73,18 @@ class HostelHuntApp extends StatelessWidget {
         '/results': (context) => HostelListScreen(),
         '/hostel_detail': (context) => HostelDetailScreen(),
         '/booking': (context) => BookingScreen(),
-<<<<<<< HEAD
-        '/payment': (context) => PaymentScreen(),
-        '/notifications': (context) => NotificationsScreen(),
-        '/profile': (context) => DemoProfileScreen(),
-=======
+        //'/managerBookingRequest': (context) => BookingsRequestScreen(),
+        //'/managerMaintenance': (context) => MaintenanceRepairsScreen(),
+        '/managerRoomManagement': (context) => RoomManagementScreen(),
+        //'/managerSettings': (context) => SettingsScreen(),
         '/tenantPayment': (context) => PaymentScreen(),
         '/managerPayment': (context) => PaymentsScreen(),
-        '/notifications': (context) => NotificationScreen(),
-        '/profile': (context) => ProfileScreen(),
->>>>>>> 9bc979c30b8a5fedccad210e58fd64f1bd4d58a5
+        '/tenantNotifications': (context) => tenant.NotificationScreen(),
+        '/managerNotifications': (context) => manager.NotificationScreen(),
+        //'/profile': (context) => ProfileScreen(),
         '/virtual-tours': (context) => const VirtualToursScreen(),
         '/manager': (context) => ManagerDashboard(),
+        '/room_management': (context) => const RoomManagementScreen(),
       },
     );
   }

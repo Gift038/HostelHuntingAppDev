@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import '../../widgets/hostel_card.dart';
 import '../../widgets/service_card.dart';
-import '../tenant_dashboard/notification_screen.dart';
+import 'package:path_provider_android/messages.g.dart';
 import 'tenants_dashboard.dart';
 import 'managers_dashboard.dart';
+import '../tenant_dashboard/notification_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -69,7 +70,7 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
       case 1:
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => const NotificationsScreen()),
+          MaterialPageRoute(builder: (context) => const NotificationScreen()),
         );
         break;
       case 2:

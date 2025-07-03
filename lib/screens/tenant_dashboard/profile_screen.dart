@@ -44,8 +44,6 @@ class ProfileScreen extends StatelessWidget {
   final UserProfile user;
   const ProfileScreen({Key? key, required this.user}) : super(key: key);
 
-  ProfileScreen({super.key});
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -73,15 +71,15 @@ class ProfileScreen extends StatelessWidget {
                     width: 96,
                     height: 96,
                     fit: BoxFit.cover,
-                    errorWidget: (context, url, error) => Icon(
-                      Icons.person,
-                      size: 48,
-                      color: coffeeBrown,
-                    ),
+                    errorWidget: (context, url, error) =>
+                        Icon(Icons.person, size: 48, color: coffeeBrown),
                     placeholder: (context, url) => SizedBox(
                       width: 32,
                       height: 32,
-                      child: CircularProgressIndicator(strokeWidth: 2, color: coffeeBrown),
+                      child: CircularProgressIndicator(
+                        strokeWidth: 2,
+                        color: coffeeBrown,
+                      ),
                     ),
                   ),
                 ),
@@ -89,7 +87,11 @@ class ProfileScreen extends StatelessWidget {
               const SizedBox(height: 16),
               Text(
                 user.name,
-                style: const TextStyle(fontSize: 22, fontWeight: FontWeight.bold, color: coffeeBrown),
+                style: const TextStyle(
+                  fontSize: 22,
+                  fontWeight: FontWeight.bold,
+                  color: coffeeBrown,
+                ),
               ),
               const SizedBox(height: 4),
               Text(
@@ -106,7 +108,11 @@ class ProfileScreen extends StatelessWidget {
                 alignment: Alignment.centerLeft,
                 child: Text(
                   'Personal Information',
-                  style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16, color: coffeeBrown),
+                  style: const TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 16,
+                    color: coffeeBrown,
+                  ),
                 ),
               ),
               const SizedBox(height: 12),
@@ -114,16 +120,28 @@ class ProfileScreen extends StatelessWidget {
                 color: Colors.white,
                 child: ListTile(
                   contentPadding: EdgeInsets.zero,
-                  title: const Text('Contact Info', style: TextStyle(color: coffeeBrown)),
-                  subtitle: Text(user.contactInfo, style: const TextStyle(color: Colors.brown)),
+                  title: const Text(
+                    'Contact Info',
+                    style: TextStyle(color: coffeeBrown),
+                  ),
+                  subtitle: Text(
+                    user.contactInfo,
+                    style: const TextStyle(color: Colors.brown),
+                  ),
                 ),
               ),
               Card(
                 color: Colors.white,
                 child: ListTile(
                   contentPadding: EdgeInsets.zero,
-                  title: const Text('Gender', style: TextStyle(color: coffeeBrown)),
-                  subtitle: Text(user.gender, style: const TextStyle(color: Colors.brown)),
+                  title: const Text(
+                    'Gender',
+                    style: TextStyle(color: coffeeBrown),
+                  ),
+                  subtitle: Text(
+                    user.gender,
+                    style: const TextStyle(color: Colors.brown),
+                  ),
                 ),
               ),
               const SizedBox(height: 16),
@@ -131,7 +149,11 @@ class ProfileScreen extends StatelessWidget {
                 alignment: Alignment.centerLeft,
                 child: Text(
                   'Payment History',
-                  style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16, color: coffeeBrown),
+                  style: const TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 16,
+                    color: coffeeBrown,
+                  ),
                 ),
               ),
               const SizedBox(height: 12),
@@ -157,13 +179,31 @@ Widget _buildPaymentRow(PaymentHistory payment) {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(payment.title, style: const TextStyle(fontWeight: FontWeight.w500, color: coffeeBrown)),
-                Text(payment.date, style: const TextStyle(fontSize: 12, color: Colors.brown)),
-                Text(payment.roomType, style: const TextStyle(fontSize: 12, color: Colors.brown)),
+                Text(
+                  payment.title,
+                  style: const TextStyle(
+                    fontWeight: FontWeight.w500,
+                    color: coffeeBrown,
+                  ),
+                ),
+                Text(
+                  payment.date,
+                  style: const TextStyle(fontSize: 12, color: Colors.brown),
+                ),
+                Text(
+                  payment.roomType,
+                  style: const TextStyle(fontSize: 12, color: Colors.brown),
+                ),
               ],
             ),
           ),
-          Text(payment.amount, style: const TextStyle(fontWeight: FontWeight.bold, color: coffeeBrown)),
+          Text(
+            payment.amount,
+            style: const TextStyle(
+              fontWeight: FontWeight.bold,
+              color: coffeeBrown,
+            ),
+          ),
         ],
       ),
     ),
@@ -225,16 +265,28 @@ class _ProfileScreenWithNavState extends State<ProfileScreenWithNav> {
   }
 
   Future<void> _fetchUserProfile() async {
-    setState(() { _loading = true; _error = null; });
+    setState(() {
+      _loading = true;
+      _error = null;
+    });
     try {
       final user = FirebaseAuth.instance.currentUser;
       if (user == null) {
-        setState(() { _error = 'Not logged in.'; _loading = false; });
+        setState(() {
+          _error = 'Not logged in.';
+          _loading = false;
+        });
         return;
       }
-      final doc = await FirebaseFirestore.instance.collection('users').doc(user.uid).get();
+      final doc = await FirebaseFirestore.instance
+          .collection('users')
+          .doc(user.uid)
+          .get();
       if (!doc.exists) {
-        setState(() { _error = 'Profile not found.'; _loading = false; });
+        setState(() {
+          _error = 'Profile not found.';
+          _loading = false;
+        });
         return;
       }
       final data = doc.data()!;
@@ -245,13 +297,18 @@ class _ProfileScreenWithNavState extends State<ProfileScreenWithNav> {
           gender: data['gender'] ?? '',
           contactInfo: data['phone'] ?? '',
           joinedYear: data['joinedYear'] ?? '',
-          avatarUrl: data['photoUrl'] ?? 'https://randomuser.me/api/portraits/men/32.jpg',
+          avatarUrl:
+              data['photoUrl'] ??
+              'https://randomuser.me/api/portraits/men/32.jpg',
           paymentHistory: [], // You can fetch payment history if stored
         );
         _loading = false;
       });
     } catch (e) {
-      setState(() { _error = e.toString(); _loading = false; });
+      setState(() {
+        _error = e.toString();
+        _loading = false;
+      });
     }
   }
 
@@ -289,10 +346,12 @@ class _ProfileScreenWithNavState extends State<ProfileScreenWithNav> {
       body: _loading
           ? const Center(child: CircularProgressIndicator())
           : _error != null
-              ? Center(child: Text(_error!, style: const TextStyle(color: Colors.red)))
-              : _userProfile == null
-                  ? const Center(child: Text('No profile data.'))
-                  : ProfileScreen(user: _userProfile!),
+          ? Center(
+              child: Text(_error!, style: const TextStyle(color: Colors.red)),
+            )
+          : _userProfile == null
+          ? const Center(child: Text('No profile data.'))
+          : ProfileScreen(user: _userProfile!),
       bottomNavigationBar: BottomNavigationBar(
         backgroundColor: Colors.brown[100],
         type: BottomNavigationBarType.fixed,
@@ -309,10 +368,7 @@ class _ProfileScreenWithNavState extends State<ProfileScreenWithNav> {
             icon: Icon(Icons.notifications),
             label: 'Notifications',
           ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.person),
-            label: 'Profile',
-          ),
+          BottomNavigationBarItem(icon: Icon(Icons.person), label: 'Profile'),
           BottomNavigationBarItem(
             icon: Icon(Icons.cases_rounded),
             label: 'Documents',

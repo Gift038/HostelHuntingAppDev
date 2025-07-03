@@ -6,7 +6,6 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 const Color coffeeBrown = Color(0xFF6F4E37); // Coffee brown
 const Color lightCoffee = Color(0xFFD7CCC8); // Light coffee brown
 
-<<<<<<< HEAD
 class NotificationItem {
   final String title;
   final String body;
@@ -26,94 +25,18 @@ class NotificationItem {
       body: data['body'] ?? '',
       type: data['type'] ?? '',
       timestamp: (data['timestamp'] as Timestamp).toDate(),
-=======
-  NotificationScreen({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Notifications'),
-        centerTitle: true,
-        elevation: 0,
-        backgroundColor: Colors.white,
-        foregroundColor: Colors.black,
-      ),
-      body: ListView.separated(
-        padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 16),
-        itemCount: notifications.length,
-        separatorBuilder: (context, index) => const SizedBox(height: 8),
-        itemBuilder: (context, index) {
-          final item = notifications[index];
-          return Container(
-            decoration: BoxDecoration(
-              color: Colors.grey[100],
-              borderRadius: BorderRadius.circular(12),
-            ),
-            child: ListTile(
-              leading: Container(
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(8),
-                ),
-                padding: const EdgeInsets.all(8),
-                child: Icon(item.icon, color: item.iconColor, size: 28),
-              ),
-              title: Text(
-                item.title,
-                style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
-              ),
-              subtitle: Text(
-                item.subtitle,
-                style: const TextStyle(fontSize: 13, color: Colors.black54),
-              ),
-              contentPadding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-            ),
-          );
-        },
-      ),
-      bottomNavigationBar: BottomNavigationBar(
-        currentIndex: 1, // Notifications is selected
-        type: BottomNavigationBarType.fixed,
-        selectedItemColor: Colors.brown,
-        unselectedItemColor: Colors.grey,
-        items: const [
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: 'Home',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.notifications),
-            label: 'Notifications',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.person),
-            label: 'Profile',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.business),
-            label: 'Manager',
-          ),
-        ],
-        onTap: (index) {
-          // TODO: Implement navigation logic
-          // Example:
-          // if (index == 0) Navigator.pushReplacementNamed(context, '/home');
-        },
-      ),
->>>>>>> 9bc979c30b8a5fedccad210e58fd64f1bd4d58a5
     );
   }
 }
 
-class NotificationsScreen extends StatefulWidget {
-  const NotificationsScreen({Key? key}) : super(key: key);
+class NotificationScreen extends StatefulWidget {
+  const NotificationScreen({Key? key}) : super(key: key);
 
   @override
-  State<NotificationsScreen> createState() => _NotificationsScreenState();
+  State<NotificationScreen> createState() => _NotificationScreenState();
 }
 
-class _NotificationsScreenState extends State<NotificationsScreen> {
+class _NotificationScreenState extends State<NotificationScreen> {
   String? get userId => FirebaseAuth.instance.currentUser?.uid;
   late final FirebaseMessaging _messaging;
 
@@ -177,7 +100,7 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
     }
 
     return Scaffold(
-      backgroundColor: lightCoffee,
+      backgroundColor: Color(0xFFFAF3E3),
       appBar: AppBar(
         title: const Text('Notifications'),
         centerTitle: true,
@@ -202,7 +125,7 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
                     if (selected) setState(() => _selectedCategory = cat['label']);
                   },
                   selectedColor: coffeeBrown,
-                  backgroundColor: lightCoffee,
+                  backgroundColor: Color(0xFFFAF3E3),
                   labelStyle: TextStyle(
                     color: _selectedCategory == cat['label'] ? Colors.white : coffeeBrown,
                     fontWeight: FontWeight.bold,
@@ -237,8 +160,9 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
                   itemBuilder: (context, index) {
                     final notif = filtered[index];
                     return Card(
-                      color: Colors.white,
+                      color: Color(0xFFFAF3E3),
                       child: ListTile(
+                        tileColor: Color(0xFFFAF3E3),
                         leading: Icon(_getIcon(notif.type), color: coffeeBrown),
                         title: Text(
                           notif.title,
@@ -262,7 +186,7 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
         ],
       ),
       bottomNavigationBar: BottomNavigationBar(
-        backgroundColor: coffeeBrown,
+        backgroundColor: Colors.black,
         type: BottomNavigationBarType.fixed,
         selectedItemColor: Colors.white,
         unselectedItemColor: lightCoffee,

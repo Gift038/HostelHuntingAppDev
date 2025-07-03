@@ -10,15 +10,24 @@ class PaymentsScreen extends StatefulWidget {
 }
 
 class _PaymentsScreenState extends State<PaymentsScreen> {
+  // Color scheme
+  final Color coffeeBrown = const Color(0xFF4B2E19); // Dark coffee brown
+  final Color coffeeBrownLight = const Color(0xFFD7CCC8); // Light brown for accents
+  final Color dashboardWhite = Colors.white; // White background
+
   String selectedStatus = 'All';
   DateTimeRange? dateRange;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: dashboardWhite,
       appBar: AppBar(
         title: const Text('Payments'),
         centerTitle: true,
+        backgroundColor: coffeeBrown,
+        foregroundColor: Colors.white,
+        elevation: 0,
       ),
       body: StreamBuilder<QuerySnapshot>(
         stream: FirebaseFirestore.instance
@@ -30,7 +39,7 @@ class _PaymentsScreenState extends State<PaymentsScreen> {
             return const Center(child: CircularProgressIndicator());
           }
           if (snapshot.hasError) {
-            return Center(child: Text('Error: ${snapshot.error}'));
+            return Center(child: Text('Error: ${snapshot.error}'));
           }
           if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
             return const Center(child: Text('No payments found.'));
@@ -80,10 +89,15 @@ class _PaymentsScreenState extends State<PaymentsScreen> {
                 Row(children: [
                   _SummaryCard(
                       title: 'Total Payments\nReceived',
-                      amount: '\$24$receivedTotal'),
+                      amount: '\$24$receivedTotal',
+                      coffeeBrown: coffeeBrown,
+                      coffeeBrownLight: coffeeBrownLight),
                   const SizedBox(width: 12),
                   _SummaryCard(
-                      title: 'Outstanding\nBalance', amount: '\$24$dueTotal'),
+                      title: 'Outstanding\nBalance',
+                      amount: '\$24$dueTotal',
+                      coffeeBrown: coffeeBrown,
+                      coffeeBrownLight: coffeeBrownLight),
                 ]),
                 const SizedBox(height: 12),
                 Row(
@@ -107,6 +121,10 @@ class _PaymentsScreenState extends State<PaymentsScreen> {
                             setState(() => dateRange = picked);
                           }
                         },
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: coffeeBrown,
+                          foregroundColor: Colors.white,
+                        ),
                         child: const Text('Pick Dates')),
                     if (dateRange != null)
                       Padding(
@@ -133,6 +151,7 @@ class _PaymentsScreenState extends State<PaymentsScreen> {
                               date = p['date'] as DateTime;
                             }
                             return Card(
+                              color: coffeeBrownLight,
                               child: ListTile(
                                 leading: Icon(
                                     p['status'] == 'received'
@@ -140,21 +159,16 @@ class _PaymentsScreenState extends State<PaymentsScreen> {
                                         : Icons.bed,
                                     color: p['status'] == 'received'
                                         ? Colors.green
-                                        : Colors.black),
-                                title: Text('${p['resident']} - ${p['room']}'),
-                                subtitle: Text('${p['status']?.toString().toUpperCase()}'),
+                                        : coffeeBrown),
+                                title: Text('${p['resident']} - ${p['room']}', style: TextStyle(color: coffeeBrown)),
+                                subtitle: Text('${p['status']?.toString().toUpperCase()}', style: TextStyle(color: coffeeBrown)),
                                 trailing: Column(
                                   crossAxisAlignment: CrossAxisAlignment.end,
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
                                     Text(
                                         '\$24${p['amount']}',
-                                        style: const TextStyle(fontWeight: FontWeight.bold)),
-                                    //Text(
-                                    //    date != null
-                                    //        ? DateFormat.yMd().format(date)
-                                    //        : 'No date',
-                                    //    style: const TextStyle(fontSize: 12)),
+                                        style: TextStyle(fontWeight: FontWeight.bold, color: coffeeBrown)),
                                   ],
                                 ),
                               ),
@@ -174,14 +188,16 @@ class _PaymentsScreenState extends State<PaymentsScreen> {
 class _SummaryCard extends StatelessWidget {
   final String title;
   final String amount;
+  final Color coffeeBrown;
+  final Color coffeeBrownLight;
 
-  const _SummaryCard({required this.title, required this.amount});
+  const _SummaryCard({required this.title, required this.amount, required this.coffeeBrown, required this.coffeeBrownLight});
 
   @override
   Widget build(BuildContext context) {
     return Expanded(
       child: Card(
-        color: Colors.grey[100],
+        color: coffeeBrownLight,
         elevation: 3,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
         child: Padding(
@@ -190,11 +206,11 @@ class _SummaryCard extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(title,
-                  style: const TextStyle(fontSize: 14, color: Colors.black54)),
+                  style: TextStyle(fontSize: 14, color: coffeeBrown)),
               const SizedBox(height: 8),
               Text(amount,
-                  style: const TextStyle(
-                      fontSize: 20, fontWeight: FontWeight.bold)),
+                  style: TextStyle(
+                      fontSize: 20, fontWeight: FontWeight.bold, color: coffeeBrown)),
             ],
           ),
         ),
