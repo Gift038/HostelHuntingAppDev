@@ -45,7 +45,7 @@ class _ServiceCardState extends State<ServiceCard> {
             children: [
               Icon(widget.icon, color: color),
               const SizedBox(width: 8),
-              Expanded(
+              Flexible(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [

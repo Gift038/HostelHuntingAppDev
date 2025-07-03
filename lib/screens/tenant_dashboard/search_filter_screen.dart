@@ -72,7 +72,7 @@ class _SearchFilterScreenState extends State<SearchFilterScreen> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               const Text('Price'),
-              Text('${_price.toStringAsFixed(0)}'),
+              Text(_price.toStringAsFixed(0)),
             ],
           ),
           Slider(

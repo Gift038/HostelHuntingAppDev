@@ -11,20 +11,9 @@ import 'screens/manager_dashboard/notification_screen.dart' as manager;
 import 'screens/manager_dashboard/payments_screen.dart';
 import 'screens/tenant_dashboard/profile_screen.dart';
 import 'screens/home/virtual_tours.dart';
-import 'screens/home/managers_dashboard.dart';
-import 'screens/manager_dashboard/room_management_screen.dart';
 
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
-import 'package:firebase_messaging/firebase_messaging.dart';
-import 'package:flutter_local_notifications/flutter_local_notifications.dart';
-
-Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
-  await Firebase.initializeApp();
-  // You can handle background notification logic here, e.g., show a local notification
-  // or update Firestore, etc.
-  print('Handling a background message: ${message.messageId}');
-}
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -44,17 +33,8 @@ void main() async {
     await Firebase.initializeApp();
   }
   
-  FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
-
-  // Optionally configure local notifications for foreground display
-  final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
-  const AndroidInitializationSettings initializationSettingsAndroid = AndroidInitializationSettings('@mipmap/ic_launcher');
-  final InitializationSettings initializationSettings = InitializationSettings(
-    android: initializationSettingsAndroid,
-  );
-  await flutterLocalNotificationsPlugin.initialize(initializationSettings);
-
   runApp(const HostelHuntApp());
+
 } 
 
 class HostelHuntApp extends StatelessWidget {
@@ -73,18 +53,10 @@ class HostelHuntApp extends StatelessWidget {
         '/results': (context) => HostelListScreen(),
         '/hostel_detail': (context) => HostelDetailScreen(),
         '/booking': (context) => BookingScreen(),
-        //'/managerBookingRequest': (context) => BookingsRequestScreen(),
-        //'/managerMaintenance': (context) => MaintenanceRepairsScreen(),
-        '/managerRoomManagement': (context) => RoomManagementScreen(),
-        //'/managerSettings': (context) => SettingsScreen(),
-        '/tenantPayment': (context) => PaymentScreen(),
-        '/managerPayment': (context) => PaymentsScreen(),
-        '/tenantNotifications': (context) => tenant.NotificationScreen(),
-        '/managerNotifications': (context) => manager.NotificationScreen(),
-        //'/profile': (context) => ProfileScreen(),
+        '/payment': (context) => PaymentScreen(),
+        '/notifications': (context) => NotificationScreen(),
+        '/profile': (context) => ProfileScreen(),
         '/virtual-tours': (context) => const VirtualToursScreen(),
-        '/manager': (context) => ManagerDashboard(),
-        '/room_management': (context) => const RoomManagementScreen(),
       },
     );
   }

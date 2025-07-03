@@ -1,104 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_messaging/firebase_messaging.dart';
 
-const Color coffeeBrown = Color(0xFF6F4E37); // Coffee brown
-const Color lightCoffee = Color(0xFFD7CCC8); // Light coffee brown
-
-class NotificationItem {
-  final String title;
-  final String body;
-  final String type;
-  final DateTime timestamp;
-
-  NotificationItem({
-    required this.title,
-    required this.body,
-    required this.type,
-    required this.timestamp,
-  });
-
-  factory NotificationItem.fromFirestore(Map<String, dynamic> data) {
-    return NotificationItem(
-      title: data['title'] ?? '',
-      body: data['body'] ?? '',
-      type: data['type'] ?? '',
-      timestamp: (data['timestamp'] as Timestamp).toDate(),
-    );
-  }
-}
-
-class NotificationScreen extends StatefulWidget {
-  const NotificationScreen({Key? key}) : super(key: key);
-
-  @override
-  State<NotificationScreen> createState() => _NotificationScreenState();
-}
-
-class _NotificationScreenState extends State<NotificationScreen> {
-  String? get userId => FirebaseAuth.instance.currentUser?.uid;
-  late final FirebaseMessaging _messaging;
-
-  // Notification categories with icons
-  final List<Map<String, dynamic>> _categories = [
-    {'label': 'All', 'icon': Icons.all_inclusive},
-    {'label': 'Booking Status', 'icon': Icons.check_circle_outline},
-    {'label': 'Check-in Reminder', 'icon': Icons.calendar_today},
-    {'label': 'Hostel Update', 'icon': Icons.notifications},
-    {'label': 'New Review', 'icon': Icons.star_border},
+class NotificationScreen extends StatelessWidget {
+  final List<String> notifications = [
+    'Booking confirmed at Greenwood Hostel',
+    'Payment successful',
+    'New hostel listings available',
   ];
-  String _selectedCategory = 'All';
-
-  @override
-  void initState() {
-    super.initState();
-    _initFCM();
-  }
-
-  void _initFCM() async {
-    _messaging = FirebaseMessaging.instance;
-    // Request permissions on iOS
-    await _messaging.requestPermission();
-    // Listen for foreground messages
-    FirebaseMessaging.onMessage.listen((RemoteMessage message) {
-      if (message.notification != null) {
-        final notif = message.notification!;
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text('${notif.title ?? ''}\n${notif.body ?? ''}'),
-            duration: const Duration(seconds: 3),
-          ),
-        );
-      }
-    });
-  }
-
-  List<NotificationItem> _filterNotifications(List<NotificationItem> notifications) {
-    switch (_selectedCategory) {
-      case 'Booking Status':
-        return notifications.where((n) => n.type == 'booking_confirmed' || n.type == 'booking_canceled').toList();
-      case 'Check-in Reminder':
-        return notifications.where((n) => n.type == 'checkin_reminder').toList();
-      case 'Hostel Update':
-        return notifications.where((n) => n.type == 'hostel_update').toList();
-      case 'New Review':
-        return notifications.where((n) => n.type == 'new_review').toList();
-      case 'All':
-      default:
-        return notifications;
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
-    if (userId == null) {
-      return Scaffold(
-        appBar: AppBar(title: const Text('Notifications')),
-        body: const Center(child: Text('Not logged in')),
-      );
-    }
-
     return Scaffold(
       backgroundColor: Color(0xFFFAF3E3),
       appBar: AppBar(

@@ -4,7 +4,6 @@ import '../../widgets/service_card.dart';
 import 'package:path_provider_android/messages.g.dart';
 import 'tenants_dashboard.dart';
 import 'managers_dashboard.dart';
-import '../tenant_dashboard/notification_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -70,16 +69,10 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
       case 1:
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => const NotificationScreen()),
+          MaterialPageRoute(builder: (context) => const NotificationsScreen()),
         );
         break;
       case 2:
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => const TenantsDashboardScreen()),
-        );
-        break;
-      case 3:
         Navigator.push(
           context,
           MaterialPageRoute(builder: (context) => const ManagerDashboard()),
@@ -184,17 +177,11 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                 ),
               ),
             ),
-            SliverPadding(
-              padding: const EdgeInsets.symmetric(horizontal: 16),
-              sliver: SliverGrid(
-                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 2,
-                  mainAxisSpacing: 12,
-                  crossAxisSpacing: 12,
-                  childAspectRatio: 3,
-                ),
-                delegate: SliverChildListDelegate(
-                  [
+            SliverToBoxAdapter(
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16),
+                child: Column(
+                  children: [
                     ServiceCard(
                       icon: Icons.auto_awesome,
                       title: 'Smart Recommendations',
@@ -202,6 +189,7 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                       coffeeBrown: coffeeBrown,
                       lightCoffeeBrown: lightCoffeeBrown,
                     ),
+                    SizedBox(height: 12),
                     ServiceCard(
                       icon: Icons.home_work,
                       title: 'Hostel Listings',
@@ -209,6 +197,7 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                       coffeeBrown: coffeeBrown,
                       lightCoffeeBrown: lightCoffeeBrown,
                     ),
+                    SizedBox(height: 12),
                     ServiceCard(
                       icon: Icons.person,
                       title: 'Tenant Records',
@@ -216,6 +205,7 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                       coffeeBrown: coffeeBrown,
                       lightCoffeeBrown: lightCoffeeBrown,
                     ),
+                    SizedBox(height: 12),
                     ServiceCard(
                       icon: Icons.build,
                       title: 'Maintenance Tracking',
@@ -223,6 +213,7 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                       coffeeBrown: coffeeBrown,
                       lightCoffeeBrown: lightCoffeeBrown,
                     ),
+                    SizedBox(height: 12),
                     ServiceCard(
                       icon: Icons.event_note,
                       title: 'Repair Scheduling',
@@ -230,6 +221,7 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                       coffeeBrown: coffeeBrown,
                       lightCoffeeBrown: lightCoffeeBrown,
                     ),
+                    SizedBox(height: 12),
                     ServiceCard(
                       icon: Icons.announcement,
                       title: 'Announcements',
@@ -272,7 +264,10 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                           foregroundColor: Colors.white,
                         ),
                         onPressed: () {
-                          // Navigate to account creation page
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) => const RegisterAccountScreen()),
+                          );
                         },
                         child: const Text('Create Account'),
                       )
@@ -297,18 +292,16 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
             label: 'Home',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.notifications),
-            label: 'Notifications',
-          ),
-          BottomNavigationBarItem(
             icon: Icon(Icons.person),
-            label: "Tenant's \nDashboard",
+            label: "Tenant Dashboard",
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.cases_rounded),
-            label: "Manager's \nDashboard",
+            label: "Manager Dashboard",
           ),
         ],
+        selectedLabelStyle: TextStyle(fontSize: 12),
+        unselectedLabelStyle: TextStyle(fontSize: 12),
       ),
     );
   }

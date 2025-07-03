@@ -222,7 +222,7 @@ class ActionButton extends StatefulWidget {
 
 class _ActionButtonState extends State<ActionButton> {
   bool _isHovering = false;
-  bool _isPressed = false;
+  final bool _isPressed = false;
 
   @override
   Widget build(BuildContext context) {
