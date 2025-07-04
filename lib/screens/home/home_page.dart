@@ -306,3 +306,7 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
     );
   }
 }
+
+class NotificationsScreen {
+  const NotificationsScreen();
+}
