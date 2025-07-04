@@ -87,7 +87,7 @@ class _TenantsDashboardScreenState extends State<TenantsDashboardScreen>
         );
         break;
       case 3:
-        Navigator.pushNamed(context, '/documents');
+        Navigator.pushNamed(context, '/tenant_documents');
         break;
     }
   }

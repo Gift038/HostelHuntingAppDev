@@ -17,7 +17,8 @@ import 'screens/home/managers_dashboard.dart';
 import 'screens/manager_dashboard/room_management_screen.dart';
 import 'screens/manager_dashboard/bookings_request.dart';
 import 'screens/manager_dashboard/maintance_repair.dart';
-import 'screens/manager_dashboard/settingscreen.dart';
+import 'screens/manager_dashboard/settings_screen.dart';
+import 'screens/tenant_dashboard/tenant_document_screen.dart';
 
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
@@ -107,6 +108,7 @@ class HostelHuntApp extends StatelessWidget {
         '/virtual-tours': (context) => const VirtualToursScreen(),
         '/manager': (context) => ManagerDashboard(),
         '/room_management': (context) => const RoomManagementScreen(),
+        '/tenant_documents': (context) => const TenantDocumentScreen(),
       },
     );
   }
