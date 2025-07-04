@@ -82,14 +82,18 @@ class _TenantsDashboardScreenState extends State<TenantsDashboardScreen>
         Navigator.push(
           context,
           MaterialPageRoute(
+<<<<<<< HEAD
             builder: (context) => ProfileScreen(
               // No parameters, ProfileScreen takes no arguments.
             ),
+=======
+            builder: (context) => ProfileScreen(),
+>>>>>>> 956c840142514c398e4c76f3cee0081c2c2e06e1
           ),
         );
         break;
       case 3:
-        Navigator.pushNamed(context, '/documents');
+        Navigator.pushNamed(context, '/tenant_documents');
         break;
     }
   }

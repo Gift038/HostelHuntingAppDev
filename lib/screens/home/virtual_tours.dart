@@ -51,23 +51,23 @@ class VirtualToursScreen extends StatelessWidget {
           ),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
-            child: Card(
+                  child: Card(
               color: Colors.white,
-              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
               elevation: 2,
-              child: Padding(
+                    child: Padding(
                 padding: const EdgeInsets.all(20),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
                       hostelName,
                       style: TextStyle(
                         fontSize: 24,
                         fontWeight: FontWeight.bold,
                         color: coffeeBrown,
                       ),
-                    ),
+                          ),
                     if (details.isNotEmpty) ...[
                       const SizedBox(height: 12),
                       Text(
@@ -81,7 +81,7 @@ class VirtualToursScreen extends StatelessWidget {
                     ...rooms.map<Widget>((room) => _RoomOptionCard(room: room, coffeeBrown: coffeeBrown, lightCoffeeBrown: lightCoffeeBrown, showBooking: false)),
                     const SizedBox(height: 24),
                     Text('Amenities', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18, color: coffeeBrown)),
-                    const SizedBox(height: 8),
+                          const SizedBox(height: 8),
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -159,30 +159,30 @@ class VirtualToursScreen extends StatelessWidget {
                     const SizedBox(height: 24),
                     Text('Location', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18, color: coffeeBrown)),
                     const SizedBox(height: 12),
-                    Container(
+                            Container(
                       height: 200,
-                      width: double.infinity,
+                              width: double.infinity,
                       decoration: BoxDecoration(
                         color: Colors.grey[300],
                         borderRadius: BorderRadius.circular(12),
                         border: Border.all(color: coffeeBrown.withOpacity(0.2)),
                       ),
-                      child: Center(
-                        child: Text(
+                              child: Center(
+                                child: Text(
                           'Google Map Placeholder\n(${location.isNotEmpty ? location : 'Hostel Location'})',
                           textAlign: TextAlign.center,
                           style: TextStyle(color: coffeeBrown, fontWeight: FontWeight.w600, fontSize: 16),
-                        ),
+                                ),
+                              ),
+                            ),
+                        ],
                       ),
                     ),
-                  ],
-                ),
-              ),
-            ),
+                  ),
           ),
         ],
       ),
-    );
+                );
   }
 }
 
@@ -511,7 +511,7 @@ class _HostelImageCarouselState extends State<_HostelImageCarousel> {
             ),
           ),
         ],
-      ),
+            ),
     );
   }
 } 

@@ -18,6 +18,14 @@ class _BookingScreenState extends State<BookingScreen> {
   int roomRate = 0;
   int serviceFee = 0;
   int total = 0;
+  String roomType = 'Single Room';
+
+  @override
+  void initState() {
+    super.initState();
+    moveInDate ??= DateTime.now();
+    moveOutDate ??= DateTime.now().add(const Duration(days: 30));
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -62,30 +70,6 @@ class _BookingScreenState extends State<BookingScreen> {
                   child: Text(roomType, style: TextStyle(fontWeight: FontWeight.w600, fontSize: 16, color: coffeeBrown)),
                 ),
                 const SizedBox(height: 28),
-                // Duration of Stay
-                Text('Duration of Stay', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20, color: coffeeBrown)),
-                const SizedBox(height: 10),
-                TextFormField(
-                  initialValue: months.toString(),
-                  keyboardType: TextInputType.number,
-                  decoration: InputDecoration(
-                    hintText: 'Number of months/semesters',
-                    filled: true,
-                    fillColor: Colors.white,
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(8),
-                      borderSide: BorderSide(color: lightCoffeeBrown),
-                    ),
-                  ),
-                  onChanged: (val) {
-                    setState(() {
-                      months = int.tryParse(val) ?? 1;
-                      if (months < 1) months = 1;
-                      moveOutDate = DateTime(moveInDate!.year, moveInDate!.month + months, moveInDate!.day);
-                    });
-                  },
-                ),
-                const SizedBox(height: 28),
                 // Move-in Date
                 Text('Move-in Date', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20, color: coffeeBrown)),
                 const SizedBox(height: 10),
@@ -118,6 +102,14 @@ class _BookingScreenState extends State<BookingScreen> {
                 // Summary of Charges
                 Text('Summary of Charges', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20, color: coffeeBrown)),
                 const SizedBox(height: 12),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    const Text('Duration of Stay', style: TextStyle(fontSize: 16)),
+                    Text('$months month${months > 1 ? 's' : ''}', style: TextStyle(fontSize: 16, color: coffeeBrown)),
+                  ],
+                ),
+                const SizedBox(height: 4),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -163,14 +155,21 @@ class _CalendarPicker extends StatelessWidget {
   Widget build(BuildContext context) {
     final now = DateTime.now();
     final firstDay = DateTime(now.year, now.month - 1, 1);
-    final lastDay = DateTime(now.year, now.month + 2, 0);
-    return CalendarDatePicker(
-      initialDate: selectedDate,
-      firstDate: firstDay,
-      lastDate: lastDay,
-      onDateChanged: onDateSelected,
-      currentDate: DateTime.now(),
-      selectableDayPredicate: (date) => date.isAfter(now.subtract(const Duration(days: 1))),
+    final lastDay = DateTime(now.year, now.month + 12, 0);
+    return Theme(
+      data: Theme.of(context).copyWith(
+        colorScheme: Theme.of(context).colorScheme.copyWith(
+          primary: coffeeBrown,
+        ),
+      ),
+      child: CalendarDatePicker(
+        initialDate: selectedDate,
+        firstDate: firstDay,
+        lastDate: lastDay,
+        onDateChanged: onDateSelected,
+        currentDate: DateTime.now(),
+        selectableDayPredicate: (date) => date.isAfter(now.subtract(const Duration(days: 1))),
+      ),
     );
   }
 }
@@ -187,6 +186,7 @@ class _BookNowButton extends StatefulWidget {
 
 class _BookNowButtonState extends State<_BookNowButton> {
   bool _isHovered = false;
+  final Color brown = const Color(0xFF8D6E63); // Brown color for default
 
   @override
   Widget build(BuildContext context) {
@@ -195,14 +195,14 @@ class _BookNowButtonState extends State<_BookNowButton> {
       onExit: (_) => setState(() => _isHovered = false),
       child: GestureDetector(
         onTap: () {
-          Navigator.pushNamed(context, '/payment');
+          Navigator.pushNamed(context, '/tenantPayment');
         },
         child: AnimatedContainer(
           duration: const Duration(milliseconds: 150),
           width: double.infinity,
           height: 52,
           decoration: BoxDecoration(
-            color: _isHovered ? widget.coffeeBrown : widget.lightCoffeeBrown,
+            color: _isHovered ? widget.coffeeBrown : brown,
             borderRadius: BorderRadius.circular(10),
             boxShadow: [
               BoxShadow(
