@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
-import '../manager_dashboard/payments_screen.dart';
 import '../manager_dashboard/addresident_screen.dart';
-import '../manager_dashboard/notification_screen.dart';
+import '../manager_dashboard/notification_screen.dart' as manager;
 import '../manager_dashboard/settings_screen.dart';
 import '../manager_dashboard/bookings_request.dart';
-import '../manager_dashboard/maintance_repair.dart';
+import '../manager_dashboard/maintenance_repair.dart';
 import '../manager_dashboard/room_management_screen.dart';
+import '../manager_dashboard/payments_screen.dart';
+import '../tenant_dashboard/notification_screen.dart' as tenant;
+import '../auth/register_account_screen.dart';
 
 void main() {
   runApp(const ManagerDashboard());
@@ -62,12 +64,12 @@ class DashboardScreen extends StatefulWidget {
 class _DashboardScreenState extends State<DashboardScreen> {
   int _selectedIndex = 0;
 
-  static const List<Widget> _pages = [
-    DashboardContent(),
-    PaymentsScreen(),
-    AddResidentScreen(),
-    NotificationScreen(),
-    SettingsScreen(), // Pass the themeMode if needed
+  final List<Widget> _pages = [
+    const DashboardContent(),
+    const PaymentsScreen(),
+    const AddResidentScreen(),
+    const manager.NotificationScreen(),
+    const SettingsScreen(),
   ];
 
   void _onBottomNavTap(int index) {
@@ -163,7 +165,7 @@ class QuickActions extends StatelessWidget {
               onTap: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (_) => const AddResidentScreen()),
+                  MaterialPageRoute(builder: (context) => const AddResidentScreen()),
                 );
               },
             ),
@@ -171,6 +173,12 @@ class QuickActions extends StatelessWidget {
               label: 'Room Management',
               onTap: () {
                 Navigator.pushNamed(context, '/room_management');
+              },
+            ),
+            ActionButton(
+              label: 'Room Matching',
+              onTap: () {
+                Navigator.pushNamed(context, '/room_matching');
               },
             ),
             ActionButton(
@@ -214,7 +222,7 @@ class _ActionButtonState extends State<ActionButton> {
   Widget build(BuildContext context) {
     Color getButtonColor() {
       if (_isPressed || _isHovering) return coffeeBrown;
-      return dirtyBrownWhite;
+      return whiteBeige;
     }
 
     Color getTextColor() {
@@ -323,6 +331,7 @@ class OverviewCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Card(
       elevation: 2,
+      color: whiteBeige,
       child: Padding(
         padding: const EdgeInsets.all(16),
         child: Column(
@@ -366,6 +375,7 @@ class KeyMetrics extends StatelessWidget {
         const SizedBox(height: 10),
         Card(
           elevation: 2,
+          color: whiteBeige,
           child: Padding(
             padding: const EdgeInsets.all(16),
             child: Column(
@@ -395,7 +405,7 @@ class KeyMetrics extends StatelessWidget {
                   alignment: Alignment.center,
                   child: const Text(
                     'Line Chart Placeholder',
-                    style: TextStyle(color: Colors.white),
+                    style: TextStyle(color: whiteBeige),
                   ),
                 ),
               ],
@@ -426,18 +436,18 @@ class PaymentStatus extends StatelessWidget {
         const SizedBox(height: 10),
         Card(
           elevation: 2,
+          color: whiteBeige,
           child: Padding(
             padding: const EdgeInsets.all(16),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const Text('90% Paid',
-                    style: TextStyle(color: coffeeBrown)),
+                const Text('90% Paid', style: TextStyle(color: coffeeBrown)),
                 const SizedBox(height: 8),
                 LinearProgressIndicator(
                   value: 0.9,
                   valueColor: const AlwaysStoppedAnimation<Color>(coffeeBrown),
-                  backgroundColor: dirtyBrownWhite,
+                  backgroundColor: whiteBeige,
                 ),
                 const SizedBox(height: 8),
                 const Text(

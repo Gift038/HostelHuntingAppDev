@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 
 const Color coffeeBrown = Color(0xFF4B2E19);
 const Color lightCoffeeBrown = Color(0xFFD7CCC8);
@@ -30,6 +29,8 @@ class _BookingScreenState extends State<BookingScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final args = ModalRoute.of(context)?.settings.arguments as Map?;
+    final String roomType = args != null && args['roomType'] != null ? args['roomType'] : 'Unknown';
     total = (roomRate * months) + serviceFee;
     return Scaffold(
       backgroundColor: Colors.white,

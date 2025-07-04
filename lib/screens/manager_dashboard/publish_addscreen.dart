@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class PublishAdScreen extends StatefulWidget {
-  const PublishAdScreen({Key? key}) : super(key: key);
+  const PublishAdScreen({super.key});
 
   @override
   State<PublishAdScreen> createState() => _PublishAdScreenState();

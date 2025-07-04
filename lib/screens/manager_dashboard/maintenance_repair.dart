@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class MaintenanceRepairsScreen extends StatefulWidget {
-  const MaintenanceRepairsScreen({Key? key}) : super(key: key);
+  const MaintenanceRepairsScreen({super.key});
 
   @override
   State<MaintenanceRepairsScreen> createState() => _MaintenanceRepairsScreenState();

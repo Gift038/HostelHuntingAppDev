@@ -12,7 +12,7 @@ class BookingRequest {
 }
 
 class BookingsRequestScreen extends StatefulWidget {
-  const BookingsRequestScreen({Key? key}) : super(key: key);
+  const BookingsRequestScreen({super.key});
 
   @override
   State<BookingsRequestScreen> createState() => _BookingsRequestScreenState();
@@ -33,7 +33,7 @@ class _BookingsRequestScreenState extends State<BookingsRequestScreen> {
 
   @override
   Widget build(BuildContext context) {
-    int _selectedIndex = 1; // Booking Requests tab
+    int selectedIndex = 1; // Booking Requests tab
     return Scaffold(
       backgroundColor: dirtyBrownWhite,
       appBar: AppBar(
@@ -89,11 +89,11 @@ class _BookingsRequestScreenState extends State<BookingsRequestScreen> {
         backgroundColor: Color(0xFFD7CCC8),
         selectedItemColor: Color(0xFF4B2E19),
         unselectedItemColor: Color(0xFF8D6E63),
-        currentIndex: _selectedIndex,
+        currentIndex: selectedIndex,
         onTap: (index) {
           // Navigation stubs: implement navigation as needed
           // 0: Dashboard, 1: Booking Requests, 2: Notifications, 3: Settings
-          if (index == _selectedIndex) return;
+          if (index == selectedIndex) return;
           // Example navigation logic (replace with your own routes/screens)
           // if (index == 0) Navigator.pushReplacementNamed(context, '/dashboard');
           // if (index == 2) Navigator.pushReplacementNamed(context, '/notifications');
