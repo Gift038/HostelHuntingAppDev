@@ -83,10 +83,7 @@ class _TenantsDashboardScreenState extends State<TenantsDashboardScreen>
           context,
           MaterialPageRoute(
             builder: (context) => ProfileScreen(
-              name: userProvider.name,
-              contact: userProvider.contact,
-              gender: userProvider.gender,
-              email: userProvider.email,
+              // No parameters, ProfileScreen takes no arguments.
             ),
           ),
         );

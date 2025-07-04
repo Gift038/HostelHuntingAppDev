@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class RoomManagementScreen extends StatefulWidget {
-  const RoomManagementScreen({Key? key}) : super(key: key);
+  const RoomManagementScreen({super.key});
 
   @override
   State<RoomManagementScreen> createState() => _RoomManagementScreenState();

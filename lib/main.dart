@@ -1,6 +1,7 @@
 // ignore_for_file: unused_import
 
 import 'package:flutter/material.dart';
+import 'package:hostelhunt_app/screens/manager_dashboard/settings_screen.dart';
 import 'screens/home/welcome_screen.dart';
 import 'screens/home/home_page.dart';
 import 'screens/tenant_dashboard/search_filter_screen.dart';
@@ -16,8 +17,7 @@ import 'screens/home/virtual_tours.dart';
 import 'screens/home/managers_dashboard.dart';
 import 'screens/manager_dashboard/room_management_screen.dart';
 import 'screens/manager_dashboard/bookings_request.dart';
-import 'screens/manager_dashboard/maintance_repair.dart';
-import 'screens/manager_dashboard/settingscreen.dart';
+import 'screens/manager_dashboard/maintenance_repair.dart';
 
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
@@ -42,7 +42,7 @@ class UserProvider extends ChangeNotifier {
 
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   await Firebase.initializeApp();
-  print('Handling a background message: [message.messageId]');
+  print('Handling a background message:  [message.messageId]');
 }
 
 void main() async {

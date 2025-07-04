@@ -41,11 +41,13 @@ class PaymentHistory {
 }
 
 class ProfileScreen extends StatelessWidget {
-  final Map<String, String> user = {
+  final Map<String, String> user = const {
     "name": "Ethan Carter",
     "gender": "Male",
     "email": "ethan@hostelhunt.com"
   };
+
+  const ProfileScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
