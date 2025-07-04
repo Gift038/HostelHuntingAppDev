@@ -44,8 +44,9 @@ class PaymentHistory {
   });
 }
 
-<<<<<<< HEAD
 class ProfileScreen extends StatefulWidget {
+  const ProfileScreen({Key? key}) : super(key: key);
+
   @override
   State<ProfileScreen> createState() => _ProfileScreenState();
 }
@@ -106,16 +107,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
     );
     setState(() {});
   }
-=======
-class ProfileScreen extends StatelessWidget {
-  final Map<String, String> user = const {
-    "name": "Ethan Carter",
-    "gender": "Male",
-    "email": "ethan@hostelhunt.com"
-  };
->>>>>>> f0bb9cc59067dae923b1a3f0561536a66d80448f
-
-  const ProfileScreen({super.key});
 
   @override
   Widget build(BuildContext context) {

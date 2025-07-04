@@ -222,7 +222,7 @@ class _ActionButtonState extends State<ActionButton> {
   Widget build(BuildContext context) {
     Color getButtonColor() {
       if (_isPressed || _isHovering) return coffeeBrown;
-      return whiteBeige;
+      return Colors.white;
     }
 
     Color getTextColor() {
@@ -331,7 +331,7 @@ class OverviewCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Card(
       elevation: 2,
-      color: whiteBeige,
+      color: Colors.white,
       child: Padding(
         padding: const EdgeInsets.all(16),
         child: Column(
@@ -375,7 +375,7 @@ class KeyMetrics extends StatelessWidget {
         const SizedBox(height: 10),
         Card(
           elevation: 2,
-          color: whiteBeige,
+          color: Colors.white,
           child: Padding(
             padding: const EdgeInsets.all(16),
             child: Column(
@@ -405,7 +405,7 @@ class KeyMetrics extends StatelessWidget {
                   alignment: Alignment.center,
                   child: const Text(
                     'Line Chart Placeholder',
-                    style: TextStyle(color: whiteBeige),
+                    style: TextStyle(color: Colors.white),
                   ),
                 ),
               ],
@@ -436,7 +436,7 @@ class PaymentStatus extends StatelessWidget {
         const SizedBox(height: 10),
         Card(
           elevation: 2,
-          color: whiteBeige,
+          color: Colors.white,
           child: Padding(
             padding: const EdgeInsets.all(16),
             child: Column(
@@ -447,7 +447,7 @@ class PaymentStatus extends StatelessWidget {
                 LinearProgressIndicator(
                   value: 0.9,
                   valueColor: const AlwaysStoppedAnimation<Color>(coffeeBrown),
-                  backgroundColor: whiteBeige,
+                  backgroundColor: Colors.white,
                 ),
                 const SizedBox(height: 8),
                 const Text(
