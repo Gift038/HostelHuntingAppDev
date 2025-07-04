@@ -76,48 +76,39 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
       // Show animated create account card
       showDialog(
         context: context,
+        barrierDismissible: true,
         builder: (context) => Center(
-          child: AnimatedScale(
-            scale: 1.1,
-            duration: const Duration(milliseconds: 300),
-            child: Card(
-              elevation: 8,
-              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(18)),
-              color: Colors.brown[100],
-              child: Padding(
-                padding: const EdgeInsets.all(32),
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Icon(Icons.person_add_alt_1, color: coffeeBrown, size: 48),
-                    const SizedBox(height: 16),
-                    Text(
-                      'Create an Account',
-                      style: TextStyle(fontWeight: FontWeight.bold, fontSize: 22, color: coffeeBrown),
-                    ),
-                    const SizedBox(height: 12),
-                    const Text(
-                      'You need to register as a Tenant or Manager to access the dashboard.',
-                      textAlign: TextAlign.center,
-                      style: TextStyle(fontSize: 16),
-                    ),
-                    const SizedBox(height: 20),
-                    ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: coffeeBrown,
-                        foregroundColor: Colors.white,
-                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 48),
+            child: Material(
+              color: Colors.transparent,
+              child: Card(
+                elevation: 12,
+                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(28)),
+                color: Colors.brown[100],
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 28, vertical: 36),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Icon(Icons.person_add_alt_1, color: coffeeBrown, size: 56),
+                      const SizedBox(height: 20),
+                      Text(
+                        'Create an Account',
+                        style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24, color: coffeeBrown),
+                        textAlign: TextAlign.center,
                       ),
-                      onPressed: () {
-                        Navigator.pop(context);
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(builder: (context) => const RegisterAccountScreen()),
-                        );
-                      },
-                      child: const Text('Create Account'),
-                    ),
-                  ],
+                      const SizedBox(height: 16),
+                      const Text(
+                        'You need to register as a Tenant or Manager to access the dashboard.',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(fontSize: 17),
+                      ),
+                      const SizedBox(height: 28),
+                      _AnimatedCreateAccountButton(coffeeBrown: coffeeBrown),
+                    ],
+                  ),
                 ),
               ),
             ),
@@ -349,6 +340,73 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
         ],
         selectedLabelStyle: TextStyle(fontSize: 12),
         unselectedLabelStyle: TextStyle(fontSize: 12),
+      ),
+    );
+  }
+}
+
+class _AnimatedCreateAccountButton extends StatefulWidget {
+  final Color coffeeBrown;
+  const _AnimatedCreateAccountButton({required this.coffeeBrown});
+
+  @override
+  State<_AnimatedCreateAccountButton> createState() => _AnimatedCreateAccountButtonState();
+}
+
+class _AnimatedCreateAccountButtonState extends State<_AnimatedCreateAccountButton> with SingleTickerProviderStateMixin {
+  double _scale = 1.0;
+
+  void _onTapDown(TapDownDetails details) {
+    setState(() => _scale = 0.93);
+  }
+
+  void _onTapUp(TapUpDetails details) {
+    setState(() => _scale = 1.0);
+  }
+
+  void _onTapCancel() {
+    setState(() => _scale = 1.0);
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTapDown: _onTapDown,
+      onTapUp: (details) {
+        _onTapUp(details);
+        Navigator.pop(context);
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => const RegisterAccountScreen()),
+        );
+      },
+      onTapCancel: _onTapCancel,
+      child: AnimatedScale(
+        scale: _scale,
+        duration: const Duration(milliseconds: 120),
+        child: Container(
+          padding: const EdgeInsets.symmetric(horizontal: 36, vertical: 18),
+          decoration: BoxDecoration(
+            color: widget.coffeeBrown,
+            borderRadius: BorderRadius.circular(32),
+            boxShadow: [
+              BoxShadow(
+                color: widget.coffeeBrown.withOpacity(0.18),
+                blurRadius: 8,
+                offset: const Offset(0, 4),
+              ),
+            ],
+          ),
+          child: const Text(
+            'Create Account',
+            style: TextStyle(
+              color: Colors.white,
+              fontWeight: FontWeight.bold,
+              fontSize: 18,
+              letterSpacing: 0.5,
+            ),
+          ),
+        ),
       ),
     );
   }
