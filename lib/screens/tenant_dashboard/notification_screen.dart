@@ -1,16 +1,82 @@
 import 'package:flutter/material.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
-class NotificationScreen extends StatelessWidget {
-  final List<String> notifications = [
-    'Booking confirmed at Greenwood Hostel',
-    'Payment successful',
-    'New hostel listings available',
+const Color coffeeBrown = Color(0xFF4B2E19);
+const Color lightCoffee = Color(0xFFD7CCC8);
+
+class NotificationItem {
+  final String title;
+  final String body;
+  final String type;
+  final DateTime timestamp;
+
+  NotificationItem({
+    required this.title,
+    required this.body,
+    required this.type,
+    required this.timestamp,
+  });
+
+  factory NotificationItem.fromFirestore(Map<String, dynamic> data) {
+    return NotificationItem(
+      title: data['title'] ?? '',
+      body: data['body'] ?? '',
+      type: data['type'] ?? '',
+      timestamp: (data['timestamp'] as Timestamp).toDate(),
+    );
+  }
+}
+
+class NotificationScreen extends StatefulWidget {
+  @override
+  _NotificationScreenState createState() => _NotificationScreenState();
+}
+
+class _NotificationScreenState extends State<NotificationScreen> {
+  String? userId;
+  final List<Map<String, dynamic>> _categories = [
+    {'label': 'All', 'icon': Icons.all_inclusive},
+    {'label': 'Booking Status', 'icon': Icons.check_circle_outline},
+    {'label': 'Check-in Reminder', 'icon': Icons.calendar_today},
+    {'label': 'Hostel Update', 'icon': Icons.notifications},
+    {'label': 'New Review', 'icon': Icons.star_border},
   ];
+  String _selectedCategory = 'All';
+
+  @override
+  void initState() {
+    super.initState();
+    userId = FirebaseAuth.instance.currentUser?.uid;
+  }
+
+  List<NotificationItem> _filterNotifications(List<NotificationItem> notifications) {
+    switch (_selectedCategory) {
+      case 'Booking Status':
+        return notifications.where((n) => n.type == 'booking_confirmed' || n.type == 'booking_canceled').toList();
+      case 'Check-in Reminder':
+        return notifications.where((n) => n.type == 'checkin_reminder').toList();
+      case 'Hostel Update':
+        return notifications.where((n) => n.type == 'hostel_update').toList();
+      case 'New Review':
+        return notifications.where((n) => n.type == 'new_review').toList();
+      case 'All':
+      default:
+        return notifications;
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
+    if (userId == null) {
+      return Scaffold(
+        appBar: AppBar(title: const Text('Notifications')),
+        body: const Center(child: Text('Not logged in')),
+      );
+    }
+
     return Scaffold(
-      backgroundColor: Color(0xFFFAF3E3),
+      backgroundColor: lightCoffee,
       appBar: AppBar(
         title: const Text('Notifications'),
         centerTitle: true,
@@ -20,7 +86,6 @@ class NotificationScreen extends StatelessWidget {
       ),
       body: Column(
         children: [
-          // Category filter chips (modern horizontal scrollable row)
           SingleChildScrollView(
             scrollDirection: Axis.horizontal,
             padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 12),
@@ -35,7 +100,7 @@ class NotificationScreen extends StatelessWidget {
                     if (selected) setState(() => _selectedCategory = cat['label']);
                   },
                   selectedColor: coffeeBrown,
-                  backgroundColor: Color(0xFFFAF3E3),
+                  backgroundColor: lightCoffee,
                   labelStyle: TextStyle(
                     color: _selectedCategory == cat['label'] ? Colors.white : coffeeBrown,
                     fontWeight: FontWeight.bold,
@@ -70,10 +135,9 @@ class NotificationScreen extends StatelessWidget {
                   itemBuilder: (context, index) {
                     final notif = filtered[index];
                     return Card(
-                      color: Color(0xFFFAF3E3),
+                      color: Colors.white,
                       child: ListTile(
-                        tileColor: Color(0xFFFAF3E3),
-                        leading: Icon(_getIcon(notif.type), color: coffeeBrown),
+                        leading: Icon(Icons.notifications, color: coffeeBrown),
                         title: Text(
                           notif.title,
                           style: const TextStyle(fontWeight: FontWeight.bold, color: coffeeBrown),
@@ -96,32 +160,17 @@ class NotificationScreen extends StatelessWidget {
         ],
       ),
       bottomNavigationBar: BottomNavigationBar(
-        backgroundColor: Colors.black,
+        backgroundColor: coffeeBrown,
         type: BottomNavigationBarType.fixed,
         selectedItemColor: Colors.white,
         unselectedItemColor: lightCoffee,
         currentIndex: 1, // Notifications tab
         onTap: (index) {
-          switch (index) {
-            case 0:
-              Navigator.pushReplacementNamed(context, '/dashboard'); // Home
-              break;
-            case 1:
-              // Already on notifications
-              break;
-            case 2:
-              Navigator.pushReplacementNamed(context, '/profile'); // Profile
-              break;
-            case 3:
-              Navigator.pushReplacementNamed(context, '/manager'); // Manager
-              break;
-          }
+          // Navigation logic here
         },
         items: const [
-          BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
+          BottomNavigationBarItem(icon: Icon(Icons.dashboard), label: 'Dashboard'),
           BottomNavigationBarItem(icon: Icon(Icons.notifications), label: 'Notifications'),
-          BottomNavigationBarItem(icon: Icon(Icons.person), label: 'Profile'),
-          BottomNavigationBarItem(icon: Icon(Icons.cases_rounded), label: 'Manager'),
         ],
       ),
     );

@@ -4,7 +4,6 @@ import '../manager_dashboard/addresident_screen.dart';
 import '../manager_dashboard/notification_screen.dart';
 import '../manager_dashboard/settings.dart';
 import '../manager_dashboard/bookings_request.dart';
-import '../manager_dashboard/bookings_request.dart';
 import '../manager_dashboard/maintance_repair.dart';
 import '../manager_dashboard/room_management_screen.dart';
 
@@ -222,7 +221,7 @@ class ActionButton extends StatefulWidget {
 
 class _ActionButtonState extends State<ActionButton> {
   bool _isHovering = false;
-  final bool _isPressed = false;
+  bool _isPressed = false;
 
   @override
   Widget build(BuildContext context) {

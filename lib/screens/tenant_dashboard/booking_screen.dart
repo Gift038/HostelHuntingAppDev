@@ -1,10 +1,26 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
-class BookingScreen extends StatelessWidget {
+const Color coffeeBrown = Color(0xFF4B2E19);
+const Color lightCoffeeBrown = Color(0xFFD7CCC8);
+const Color darkBlue = Color(0xFF003366);
+
+class BookingScreen extends StatefulWidget {
+  @override
+  _BookingScreenState createState() => _BookingScreenState();
+}
+
+class _BookingScreenState extends State<BookingScreen> {
+  DateTime? moveInDate;
+  DateTime? moveOutDate;
+  int months = 1;
+  int roomRate = 0;
+  int serviceFee = 0;
+  int total = 0;
+
   @override
   Widget build(BuildContext context) {
-    int total = (roomRate * months) + serviceFee;
+    total = (roomRate * months) + serviceFee;
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
