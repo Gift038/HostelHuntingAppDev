@@ -8,6 +8,8 @@ import '../tenant_dashboard/notification_screen.dart';
 import '../auth/register_account_screen.dart';
 import 'sign_up_screen.dart';
 import '../../screens/auth/register_account_screen.dart';
+import 'package:provider/provider.dart';
+import '../../main.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -65,22 +67,82 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
   }
 
   void _onNavTapped(int index) {
+    final userProvider = Provider.of<UserProvider>(context, listen: false);
     setState(() {
       _currentIndex = index;
     });
 
+    if (userProvider.role.isEmpty) {
+      // Show animated create account card
+      showDialog(
+        context: context,
+        builder: (context) => Center(
+          child: AnimatedScale(
+            scale: 1.1,
+            duration: const Duration(milliseconds: 300),
+            child: Card(
+              elevation: 8,
+              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(18)),
+              color: Colors.brown[100],
+              child: Padding(
+                padding: const EdgeInsets.all(32),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Icon(Icons.person_add_alt_1, color: coffeeBrown, size: 48),
+                    const SizedBox(height: 16),
+                    Text(
+                      'Create an Account',
+                      style: TextStyle(fontWeight: FontWeight.bold, fontSize: 22, color: coffeeBrown),
+                    ),
+                    const SizedBox(height: 12),
+                    const Text(
+                      'You need to register as a Tenant or Manager to access the dashboard.',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(fontSize: 16),
+                    ),
+                    const SizedBox(height: 20),
+                    ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: coffeeBrown,
+                        foregroundColor: Colors.white,
+                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+                      ),
+                      onPressed: () {
+                        Navigator.pop(context);
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => const RegisterAccountScreen()),
+                        );
+                      },
+                      child: const Text('Create Account'),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ),
+        ),
+      );
+      return;
+    }
+
     switch (index) {
       case 1:
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => const TenantsDashboardScreen()),
-        );
+        if (userProvider.role == 'Tenant') {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => const TenantsDashboardScreen()),
+          );
+        }
         break;
       case 2:
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => const ManagerDashboard()),
-        );
+        if (userProvider.role == 'Hostel Manager') {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => const ManagerDashboard()),
+          );
+        }
         break;
     }
   }
