@@ -4,8 +4,6 @@ import 'package:flutter/material.dart';
 class HostelListScreen extends StatelessWidget {
   const HostelListScreen({super.key});
 
-  HostelListScreen({super.key});
-
   @override
   Widget build(BuildContext context) {
     final List<Map<String, dynamic>> hostels = [

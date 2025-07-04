@@ -82,12 +82,7 @@ class _TenantsDashboardScreenState extends State<TenantsDashboardScreen>
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => ProfileScreen(
-              name: userProvider.name,
-              contact: userProvider.contact,
-              gender: userProvider.gender,
-              email: userProvider.email,
-            ),
+            builder: (context) => ProfileScreen(),
           ),
         );
         break;
