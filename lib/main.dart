@@ -7,7 +7,6 @@ import 'screens/tenant_dashboard/hostel_detail_screen.dart';
 import 'screens/tenant_dashboard/booking_screen.dart';
 import 'screens/tenant_dashboard/payment_screen.dart';
 import 'screens/tenant_dashboard/notification_screen.dart';
-import 'screens/tenant_dashboard/profile_screen.dart';
 import 'screens/home/virtual_tours.dart';
 import 'screens/tenant_dashboard/tenant_document_screen.dart';
 

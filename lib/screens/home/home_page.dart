@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../widgets/hostel_card.dart';
 import '../../widgets/service_card.dart';
-import 'notifications_screen.dart';
 import 'tenants_dashboard.dart';
 import 'managers_dashboard.dart';
 import '../auth/register_account_screen.dart';

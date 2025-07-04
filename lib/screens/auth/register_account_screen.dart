@@ -180,8 +180,8 @@ class _RegisterAccountScreenState extends State<RegisterAccountScreen> {
             children: [
               TextButton(
                 onPressed: _prevStep,
-                child: const Text('Back'),
                 style: TextButton.styleFrom(foregroundColor: coffeeBrown),
+                child: const Text('Back'),
               ),
               ElevatedButton(
                 style: ElevatedButton.styleFrom(
