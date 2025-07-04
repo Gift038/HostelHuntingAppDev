@@ -31,12 +31,26 @@ class UserProvider extends ChangeNotifier {
   String contact = '';
   String gender = '';
   String email = '';
+  String school = '';
+  String programme = '';
+  String yearOfStudy = '';
 
-  void setUser({required String name, required String contact, required String gender, required String email}) {
+  void setUser({
+    required String name,
+    required String contact,
+    required String gender,
+    required String email,
+    String school = '',
+    String programme = '',
+    String yearOfStudy = '',
+  }) {
     this.name = name;
     this.contact = contact;
     this.gender = gender;
     this.email = email;
+    this.school = school;
+    this.programme = programme;
+    this.yearOfStudy = yearOfStudy;
     notifyListeners();
   }
 }

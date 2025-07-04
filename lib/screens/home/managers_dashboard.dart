@@ -11,7 +11,8 @@ void main() {
   runApp(const ManagerDashboard());
 }
 
-const Color coffeeBrown = Color(0xFF4B2E19);
+const Color coffeeBrown = Color(0xFF4B2E05);
+const Color lightCoffeeBrown = Color(0xFF9C7A5F);
 const Color dirtyBrownWhite = Color(0xFFFAF3E3);
 
 class ManagerDashboard extends StatelessWidget {
@@ -26,13 +27,13 @@ class ManagerDashboard extends StatelessWidget {
           primarySwatch: Colors.brown,
         ).copyWith(
           secondary: coffeeBrown,
-          surface: dirtyBrownWhite,
-          background: dirtyBrownWhite,
+          surface: Colors.white,
+          background: Colors.white,
         ),
-        scaffoldBackgroundColor: dirtyBrownWhite,
+        scaffoldBackgroundColor: Colors.white,
         appBarTheme: const AppBarTheme(
-          backgroundColor: coffeeBrown,
-          foregroundColor: Colors.white,
+          backgroundColor: Colors.white,
+          foregroundColor: coffeeBrown,
         ),
         elevatedButtonTheme: ElevatedButtonThemeData(
           style: ElevatedButton.styleFrom(
@@ -84,11 +85,12 @@ class _DashboardScreenState extends State<DashboardScreen> {
       ),
       body: _pages[_selectedIndex],
       bottomNavigationBar: BottomNavigationBar(
-        backgroundColor: coffeeBrown,
+        backgroundColor: Colors.brown[100],
         currentIndex: _selectedIndex,
         onTap: _onBottomNavTap,
-        selectedItemColor: dirtyBrownWhite,
-        unselectedItemColor: dirtyBrownWhite.withOpacity(0.7),
+        selectedItemColor: coffeeBrown,
+        unselectedItemColor: lightCoffeeBrown,
+        type: BottomNavigationBarType.fixed,
         items: const [
           BottomNavigationBarItem(
             icon: Icon(Icons.dashboard),
