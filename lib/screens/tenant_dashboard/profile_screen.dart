@@ -1,129 +1,63 @@
 import 'package:flutter/material.dart';
+import 'package:cached_network_image/cached_network_image.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+
+const Color coffeeBrown = Color(0xFF6F4E37); // Coffee brown
+const Color lightCoffee = Color(0xFFD7CCC8); // Light coffee brown
+
+class UserProfile {
+  final String name;
+  final String email;
+  final String gender;
+  final String contactInfo;
+  final String joinedYear;
+  final String avatarUrl;
+  final List<PaymentHistory> paymentHistory;
+
+  UserProfile({
+    required this.name,
+    required this.email,
+    required this.gender,
+    required this.contactInfo,
+    required this.joinedYear,
+    required this.avatarUrl,
+    required this.paymentHistory,
+  });
+}
+
+class PaymentHistory {
+  final String title;
+  final String date;
+  final String roomType;
+  final String amount;
+
+  PaymentHistory({
+    required this.title,
+    required this.date,
+    required this.roomType,
+    required this.amount,
+  });
+}
 
 class ProfileScreen extends StatelessWidget {
-  final String name;
-  final String contact;
-  final String gender;
-  final String email;
-
-  const ProfileScreen({
-    super.key,
-    required this.name,
-    required this.contact,
-    required this.gender,
-    required this.email,
-  });
+  final Map<String, String> user = {
+    "name": "Ethan Carter",
+    "gender": "Male",
+    "email": "ethan@hostelhunt.com"
+  };
 
   @override
   Widget build(BuildContext context) {
     final Color coffeeBrown = const Color(0xFF4B2E05);
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Profile'),
-        backgroundColor: Colors.white,
-        foregroundColor: coffeeBrown,
-        elevation: 0,
-        centerTitle: true,
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back),
-          onPressed: () => Navigator.of(context).pop(),
+      appBar: AppBar(title: Text("Profile")),
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          children: user.entries.map((e) => ListTile(title: Text(e.key), subtitle: Text(e.value))).toList(),
         ),
       ),
-      backgroundColor: Colors.white,
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 24),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              const SizedBox(height: 8),
-              Center(
-                child: CircleAvatar(
-                  radius: 56,
-                  backgroundColor: Color(0xFFF8F5F2),
-                  backgroundImage: AssetImage('assets/profile_placeholder.png'), // Add this asset
-                ),
-              ),
-              const SizedBox(height: 20),
-              Text(
-                name,
-                style: const TextStyle(
-                  fontSize: 26,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.black,
-                ),
-              ),
-              const SizedBox(height: 6),
-              const Text(
-                'Joined 2021',
-                style: TextStyle(
-                  fontSize: 15,
-                  color: Colors.grey,
-                  fontWeight: FontWeight.w400,
-                ),
-              ),
-              const SizedBox(height: 2),
-              Text(
-                email,
-                style: const TextStyle(
-                  fontSize: 15,
-                  color: Colors.grey,
-                  fontWeight: FontWeight.w400,
-                ),
-              ),
-              const SizedBox(height: 32),
-              const Align(
-                alignment: Alignment.centerLeft,
-                child: Text(
-                  'Personal Information',
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 18,
-                    color: Colors.black,
-                  ),
-                ),
-              ),
-              const SizedBox(height: 18),
-              _InfoRow(label: 'Contact Info', value: contact),
-              const SizedBox(height: 12),
-              _InfoRow(label: 'Gender', value: gender),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-class _InfoRow extends StatelessWidget {
-  final String label;
-  final String value;
-  const _InfoRow({required this.label, required this.value});
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          label,
-          style: const TextStyle(
-            fontWeight: FontWeight.w600,
-            fontSize: 16,
-            color: Colors.black,
-          ),
-        ),
-        const SizedBox(width: 24),
-        Expanded(
-          child: Text(
-            value,
-            style: const TextStyle(
-              fontSize: 16,
-              color: Colors.black87,
-            ),
-          ),
-        ),
-      ],
     );
   }
 }

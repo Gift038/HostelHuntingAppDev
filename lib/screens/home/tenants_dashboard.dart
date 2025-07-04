@@ -258,7 +258,7 @@ class _TenantsDashboardScreenState extends State<TenantsDashboardScreen>
                       style: TextStyle(
                         fontSize: 20,
                         fontWeight: FontWeight.bold,
-                        color: Colors.brown,
+                        color: Color.fromRGBO(121, 85, 72, 1),
                       ),
                     ),
                     SizedBox(height: 2),
@@ -327,7 +327,7 @@ class _TenantsDashboardScreenState extends State<TenantsDashboardScreen>
                 ),
               ),
               HostelListTile(
-                imagePath: 'assets/hostel5.jpg',
+                imagePath: 'assets/hostel1.jpg',
                 name: 'Scholars Inn',
                 rating: 4.9,
                 reviews: 135,
@@ -345,7 +345,7 @@ class _TenantsDashboardScreenState extends State<TenantsDashboardScreen>
                 type: 'Gender Type: Single - Only Females',
               ),
               HostelListTile(
-                imagePath: 'assets/hostel6.jpg',
+                imagePath: 'assets/hostel1.jpg',
                 name: 'Victoria Residence',
                 rating: 4.4,
                 reviews: 90,

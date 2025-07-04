@@ -1,8 +1,20 @@
 import 'package:flutter/material.dart';
+import '../manager_dashboard/payments_screen.dart';
+import '../manager_dashboard/addresident_screen.dart';
+import '../manager_dashboard/notification_screen.dart';
+import '../manager_dashboard/settings.dart';
+import '../manager_dashboard/bookings_request.dart';
+import '../manager_dashboard/maintance_repair.dart';
+import '../manager_dashboard/room_management_screen.dart';
 
 void main() {
   runApp(const ManagerDashboard());
 }
+
+// Define your main dark coffee brown and white color scheme
+const Color coffeeBrown = Color(0xFF4B2E19); // Dark coffee brown
+// const Color coffeeBrownLight = Color(0xFFD7CCC8); // Light brown for accents (removed)
+const Color dirtyBrownWhite = Color(0xFFFAF3E3); // Dirty brown white background
 
 class ManagerDashboard extends StatelessWidget {
   const ManagerDashboard({super.key});
@@ -12,14 +24,23 @@ class ManagerDashboard extends StatelessWidget {
     return MaterialApp(
       title: 'Manager Dashboard',
       theme: ThemeData(
-        primarySwatch: Colors.brown,
-        scaffoldBackgroundColor: const Color.fromARGB(255, 243, 241, 244),
+        colorScheme: ColorScheme.fromSwatch(
+          primarySwatch: Colors.brown,
+          accentColor: dirtyBrownWhite,
+        ).copyWith(
+          surface: dirtyBrownWhite,
+          background: dirtyBrownWhite,
+        ),
+        scaffoldBackgroundColor: dirtyBrownWhite,
         appBarTheme: const AppBarTheme(
-          backgroundColor: Colors.brown,
+          backgroundColor: coffeeBrown,
           foregroundColor: Colors.white,
         ),
         elevatedButtonTheme: ElevatedButtonThemeData(
-          style: ElevatedButton.styleFrom(backgroundColor: Colors.brown),
+          style: ElevatedButton.styleFrom(
+            backgroundColor: coffeeBrown,
+            foregroundColor: Colors.white,
+          ),
         ),
       ),
       home: const DashboardScreen(),
@@ -40,8 +61,13 @@ class _DashboardScreenState extends State<DashboardScreen> {
 
   static const List<Widget> _pages = [
     DashboardContent(),
-    PlaceholderWidget(label: "Payments"),
-    PlaceholderWidget(label: "Residents"),
+    PaymentsScreen(),
+    AddResidentScreen(),
+    NotificationScreen(),
+    SettingsScreen(),
+    //PlaceholderWidget(label: "Residents"),
+    //PlaceholderWidget(label: "Notifications"),
+    //PlaceholderWidget(label: "Settings"),
   ];
 
   void _onBottomNavTap(int index) {
@@ -59,10 +85,13 @@ class _DashboardScreenState extends State<DashboardScreen> {
       ),
       body: _pages[_selectedIndex],
       bottomNavigationBar: BottomNavigationBar(
+        backgroundColor: Color(0xFFD5C9C4),
         currentIndex: _selectedIndex,
         onTap: _onBottomNavTap,
-        selectedItemColor: Colors.brown,
-        unselectedItemColor: Colors.brown.shade200,
+        selectedItemColor: Colors.white,
+        unselectedItemColor: Colors.white,
+        selectedLabelStyle: const TextStyle(color: Colors.white),
+        unselectedLabelStyle: const TextStyle(color: Colors.white),
         items: const [
           BottomNavigationBarItem(
             icon: Icon(Icons.dashboard),
@@ -70,8 +99,17 @@ class _DashboardScreenState extends State<DashboardScreen> {
           ),
           BottomNavigationBarItem(icon: Icon(Icons.payment), label: 'Payments'),
           BottomNavigationBarItem(icon: Icon(Icons.people), label: 'Residents'),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.notifications),
+            label: 'Notifications',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.settings),
+            label: 'Settings',
+          ),
         ],
       ),
+      backgroundColor: dirtyBrownWhite, // Set Scaffold background to dirty brown white
     );
   }
 }
@@ -110,7 +148,7 @@ class PlaceholderWidget extends StatelessWidget {
     return Center(
       child: Text(
         '$label Page',
-        style: const TextStyle(fontSize: 22, color: Colors.brown),
+        style: const TextStyle(fontSize: 22, color: coffeeBrown),
       ),
     );
   }
@@ -126,17 +164,44 @@ class QuickActions extends StatelessWidget {
       children: [
         const Text(
           'Quick Actions',
-          style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+          style: TextStyle(
+            fontSize: 18,
+            fontWeight: FontWeight.bold,
+            color: coffeeBrown,
+          ),
         ),
         const SizedBox(height: 10),
         Wrap(
           spacing: 10,
           runSpacing: 10,
-          children: const [
-            ActionButton(label: 'Add Resident'),
-            ActionButton(label: 'Room Management'),
-            ActionButton(label: 'Tenant Listing'),
-            ActionButton(label: 'Maintenance Requests'),
+          children: [
+            ActionButton(
+              label: 'Add Resident',
+              onTap: () {
+                Navigator.push(context, MaterialPageRoute(builder: (_) => const AddResidentScreen()));
+              },
+            ),
+            ActionButton(
+              label: 'Room Management',
+              onTap: () {
+                Navigator.pushNamed(context, '/room_management');
+              },
+            ),
+            ActionButton(
+              label: 'Tenant Listing',
+              onTap: () {
+                showDialog(
+                  context: context,
+                  builder: (_) => const AlertDialog(content: Text('Tenant Listing')),
+                );
+              },
+            ),
+            ActionButton(
+              label: 'Maintenance Requests',
+              onTap: () {
+                Navigator.pushNamed(context, '/maintenance');
+              },
+            ),
           ],
         ),
       ],
@@ -146,8 +211,9 @@ class QuickActions extends StatelessWidget {
 
 class ActionButton extends StatefulWidget {
   final String label;
+  final VoidCallback? onTap;
 
-  const ActionButton({super.key, required this.label});
+  const ActionButton({super.key, required this.label, this.onTap});
 
   @override
   State<ActionButton> createState() => _ActionButtonState();
@@ -155,18 +221,23 @@ class ActionButton extends StatefulWidget {
 
 class _ActionButtonState extends State<ActionButton> {
   bool _isHovering = false;
-  final bool _isPressed = false;
+  bool _isPressed = false;
 
   @override
   Widget build(BuildContext context) {
-    final Color baseColor = Colors.brown;
-    final Color hoverColor = Colors.brown.shade300;
-    final Color pressedColor = Colors.brown.shade800;
+    final Color hoverColor = coffeeBrown;
+    final Color pressedColor = coffeeBrown;
+    final Color newBaseColor = dirtyBrownWhite;
 
     Color getButtonColor() {
       if (_isPressed) return pressedColor;
       if (_isHovering) return hoverColor;
-      return baseColor;
+      return newBaseColor;
+    }
+
+    Color getTextColor() {
+      if (_isPressed || _isHovering) return Colors.white;
+      return coffeeBrown;
     }
 
     return MouseRegion(
@@ -174,10 +245,49 @@ class _ActionButtonState extends State<ActionButton> {
       onExit: (_) => setState(() => _isHovering = false),
       child: AnimatedContainer(
         duration: const Duration(milliseconds: 200),
-        child: ElevatedButton(
-          style: ElevatedButton.styleFrom(backgroundColor: getButtonColor()),
-          onPressed: () {},
-          child: Text(widget.label),
+        curve: Curves.easeInOut,
+        transform: _isHovering ? (Matrix4.identity()..scale(1.05)) : Matrix4.identity(),
+        decoration: BoxDecoration(
+          color: getButtonColor(),
+          borderRadius: BorderRadius.circular(8),
+          boxShadow: _isHovering
+              ? [
+                  BoxShadow(
+                    color: coffeeBrown.withOpacity(0.25),
+                    blurRadius: 12,
+                    offset: const Offset(0, 4),
+                  ),
+                ]
+              : [],
+        ),
+        child: Material(
+          color: Colors.transparent,
+          child: InkWell(
+            borderRadius: BorderRadius.circular(8),
+            onTap: () {
+              setState(() {
+                _isPressed = true;
+              });
+              Future.delayed(const Duration(milliseconds: 100), () {
+                setState(() {
+                  _isPressed = false;
+                });
+                if (widget.onTap != null) widget.onTap!();
+              });
+            },
+            child: Container(
+              padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 14),
+              alignment: Alignment.center,
+              child: Text(
+                widget.label,
+                style: TextStyle(
+                  color: getTextColor(),
+                  fontWeight: FontWeight.w600,
+                  fontSize: 16,
+                ),
+              ),
+            ),
+          ),
         ),
       ),
     );
@@ -194,7 +304,11 @@ class Overview extends StatelessWidget {
       children: [
         const Text(
           'Overview',
-          style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+          style: TextStyle(
+            fontSize: 18,
+            fontWeight: FontWeight.bold,
+            color: coffeeBrown,
+          ),
         ),
         const SizedBox(height: 10),
         Row(
@@ -225,14 +339,24 @@ class OverviewCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Card(
       elevation: 2,
+      color: dirtyBrownWhite,
       child: Padding(
         padding: const EdgeInsets.all(16),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(title, style: const TextStyle(fontWeight: FontWeight.bold)),
+            Text(
+              title,
+              style: const TextStyle(
+                fontWeight: FontWeight.bold,
+                color: coffeeBrown,
+              ),
+            ),
             const SizedBox(height: 8),
-            Text(value, style: const TextStyle(fontSize: 16)),
+            Text(
+              value,
+              style: const TextStyle(fontSize: 16, color: coffeeBrown),
+            ),
           ],
         ),
       ),
@@ -250,11 +374,16 @@ class KeyMetrics extends StatelessWidget {
       children: [
         const Text(
           'Key Metrics',
-          style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+          style: TextStyle(
+            fontSize: 18,
+            fontWeight: FontWeight.bold,
+            color: coffeeBrown,
+          ),
         ),
         const SizedBox(height: 10),
         Card(
           elevation: 2,
+          color: dirtyBrownWhite,
           child: Padding(
             padding: const EdgeInsets.all(16),
             child: Column(
@@ -262,18 +391,30 @@ class KeyMetrics extends StatelessWidget {
               children: [
                 const Text(
                   'Monthly Revenue',
-                  style: TextStyle(fontWeight: FontWeight.bold),
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    color: coffeeBrown,
+                  ),
                 ),
                 const SizedBox(height: 8),
-                const Text('Ugx 5,000,000'),
+                const Text(
+                  'Ugx 5,000,000',
+                  style: TextStyle(color: coffeeBrown),
+                ),
                 const SizedBox(height: 8),
-                const Text('Last 6 months: +15%'),
+                const Text(
+                  'Last 6 months: +15%',
+                  style: TextStyle(color: coffeeBrown),
+                ),
                 const SizedBox(height: 20),
                 Container(
                   height: 100,
-                  color: Colors.brown.shade100,
+                  color: coffeeBrown,
                   alignment: Alignment.center,
-                  child: const Text('Line Chart Placeholder'),
+                  child: const Text(
+                    'Line Chart Placeholder',
+                    style: TextStyle(color: dirtyBrownWhite),
+                  ),
                 ),
               ],
             ),
@@ -294,25 +435,33 @@ class PaymentStatus extends StatelessWidget {
       children: [
         const Text(
           'Payment Status',
-          style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+          style: TextStyle(
+            fontSize: 18,
+            fontWeight: FontWeight.bold,
+            color: coffeeBrown,
+          ),
         ),
         const SizedBox(height: 10),
         Card(
           elevation: 2,
+          color: dirtyBrownWhite,
           child: Padding(
             padding: const EdgeInsets.all(16),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const Text('90% Paid'),
+                const Text('90% Paid', style: TextStyle(color: coffeeBrown)),
                 const SizedBox(height: 8),
                 LinearProgressIndicator(
                   value: 0.9,
-                  color: Colors.brown,
-                  backgroundColor: Colors.brown.shade100,
+                  valueColor: AlwaysStoppedAnimation<Color>(coffeeBrown),
+                  backgroundColor: dirtyBrownWhite,
                 ),
                 const SizedBox(height: 8),
-                const Text('This month: +5%'),
+                const Text(
+                  'This month: +5%',
+                  style: TextStyle(color: coffeeBrown),
+                ),
               ],
             ),
           ),
@@ -332,7 +481,11 @@ class RecentActivity extends StatelessWidget {
       children: [
         const Text(
           'Recent Activity',
-          style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+          style: TextStyle(
+            fontSize: 18,
+            fontWeight: FontWeight.bold,
+            color: coffeeBrown,
+          ),
         ),
         const SizedBox(height: 10),
         const ActivityItem(
@@ -371,11 +524,11 @@ class ActivityItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListTile(
       leading: CircleAvatar(
-        backgroundColor: Colors.brown,
+        backgroundColor: coffeeBrown,
         child: Icon(icon, color: Colors.white),
       ),
-      title: Text(title),
-      subtitle: Text(subtitle),
+      title: Text(title, style: const TextStyle(color: coffeeBrown)),
+      subtitle: Text(subtitle, style: const TextStyle(color: dirtyBrownWhite)),
     );
   }
 }
