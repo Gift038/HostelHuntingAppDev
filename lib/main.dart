@@ -17,7 +17,7 @@ import 'screens/home/managers_dashboard.dart';
 import 'screens/manager_dashboard/room_management_screen.dart';
 import 'screens/manager_dashboard/bookings_request.dart';
 import 'screens/manager_dashboard/maintance_repair.dart';
-import 'screens/manager_dashboard/settings.dart';
+import 'screens/manager_dashboard/settingscreen.dart';
 
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
