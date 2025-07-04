@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import '../manager_dashboard/payments_screen.dart';
 import '../manager_dashboard/addresident_screen.dart';
 import '../manager_dashboard/notification_screen.dart';
-import '../manager_dashboard/settings.dart';
+import '../manager_dashboard/settings_screen.dart';
 import '../manager_dashboard/bookings_request.dart';
 import '../manager_dashboard/maintance_repair.dart';
 import '../manager_dashboard/room_management_screen.dart';
@@ -11,10 +11,8 @@ void main() {
   runApp(const ManagerDashboard());
 }
 
-// Define your main dark coffee brown and white color scheme
-const Color coffeeBrown = Color(0xFF4B2E19); // Dark coffee brown
-// const Color coffeeBrownLight = Color(0xFFD7CCC8); // Light brown for accents (removed)
-const Color dirtyBrownWhite = Color(0xFFFAF3E3); // Dirty brown white background
+const Color coffeeBrown = Color(0xFF4B2E19);
+const Color dirtyBrownWhite = Color(0xFFFAF3E3);
 
 class ManagerDashboard extends StatelessWidget {
   const ManagerDashboard({super.key});
@@ -26,8 +24,8 @@ class ManagerDashboard extends StatelessWidget {
       theme: ThemeData(
         colorScheme: ColorScheme.fromSwatch(
           primarySwatch: Colors.brown,
-          accentColor: dirtyBrownWhite,
         ).copyWith(
+          secondary: coffeeBrown,
           surface: dirtyBrownWhite,
           background: dirtyBrownWhite,
         ),
@@ -44,6 +42,10 @@ class ManagerDashboard extends StatelessWidget {
         ),
       ),
       home: const DashboardScreen(),
+      routes: {
+        '/room_management': (_) => const RoomManagementScreen(),
+        '/maintenance': (_) => const MaintenanceRepairsScreen(),
+      },
       debugShowCheckedModeBanner: false,
     );
   }
@@ -64,10 +66,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
     PaymentsScreen(),
     AddResidentScreen(),
     NotificationScreen(),
-    SettingsScreen(),
-    //PlaceholderWidget(label: "Residents"),
-    //PlaceholderWidget(label: "Notifications"),
-    //PlaceholderWidget(label: "Settings"),
+    SettingsScreen(), // Pass the themeMode if needed
   ];
 
   void _onBottomNavTap(int index) {
@@ -85,13 +84,11 @@ class _DashboardScreenState extends State<DashboardScreen> {
       ),
       body: _pages[_selectedIndex],
       bottomNavigationBar: BottomNavigationBar(
-        backgroundColor: Color(0xFFD5C9C4),
+        backgroundColor: coffeeBrown,
         currentIndex: _selectedIndex,
         onTap: _onBottomNavTap,
-        selectedItemColor: Colors.white,
-        unselectedItemColor: Colors.white,
-        selectedLabelStyle: const TextStyle(color: Colors.white),
-        unselectedLabelStyle: const TextStyle(color: Colors.white),
+        selectedItemColor: dirtyBrownWhite,
+        unselectedItemColor: dirtyBrownWhite.withOpacity(0.7),
         items: const [
           BottomNavigationBarItem(
             icon: Icon(Icons.dashboard),
@@ -109,7 +106,6 @@ class _DashboardScreenState extends State<DashboardScreen> {
           ),
         ],
       ),
-      backgroundColor: dirtyBrownWhite, // Set Scaffold background to dirty brown white
     );
   }
 }
@@ -139,21 +135,6 @@ class DashboardContent extends StatelessWidget {
   }
 }
 
-class PlaceholderWidget extends StatelessWidget {
-  final String label;
-  const PlaceholderWidget({required this.label, super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Center(
-      child: Text(
-        '$label Page',
-        style: const TextStyle(fontSize: 22, color: coffeeBrown),
-      ),
-    );
-  }
-}
-
 class QuickActions extends StatelessWidget {
   const QuickActions({super.key});
 
@@ -178,7 +159,10 @@ class QuickActions extends StatelessWidget {
             ActionButton(
               label: 'Add Resident',
               onTap: () {
-                Navigator.push(context, MaterialPageRoute(builder: (_) => const AddResidentScreen()));
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (_) => const AddResidentScreen()),
+                );
               },
             ),
             ActionButton(
@@ -192,7 +176,8 @@ class QuickActions extends StatelessWidget {
               onTap: () {
                 showDialog(
                   context: context,
-                  builder: (_) => const AlertDialog(content: Text('Tenant Listing')),
+                  builder: (_) =>
+                      const AlertDialog(content: Text('Tenant Listing')),
                 );
               },
             ),
@@ -225,14 +210,9 @@ class _ActionButtonState extends State<ActionButton> {
 
   @override
   Widget build(BuildContext context) {
-    final Color hoverColor = coffeeBrown;
-    final Color pressedColor = coffeeBrown;
-    final Color newBaseColor = dirtyBrownWhite;
-
     Color getButtonColor() {
-      if (_isPressed) return pressedColor;
-      if (_isHovering) return hoverColor;
-      return newBaseColor;
+      if (_isPressed || _isHovering) return coffeeBrown;
+      return dirtyBrownWhite;
     }
 
     Color getTextColor() {
@@ -246,7 +226,9 @@ class _ActionButtonState extends State<ActionButton> {
       child: AnimatedContainer(
         duration: const Duration(milliseconds: 200),
         curve: Curves.easeInOut,
-        transform: _isHovering ? (Matrix4.identity()..scale(1.05)) : Matrix4.identity(),
+        transform: _isHovering
+            ? (Matrix4.identity()..scale(1.05))
+            : Matrix4.identity(),
         decoration: BoxDecoration(
           color: getButtonColor(),
           borderRadius: BorderRadius.circular(8),
@@ -339,7 +321,6 @@ class OverviewCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Card(
       elevation: 2,
-      color: dirtyBrownWhite,
       child: Padding(
         padding: const EdgeInsets.all(16),
         child: Column(
@@ -383,7 +364,6 @@ class KeyMetrics extends StatelessWidget {
         const SizedBox(height: 10),
         Card(
           elevation: 2,
-          color: dirtyBrownWhite,
           child: Padding(
             padding: const EdgeInsets.all(16),
             child: Column(
@@ -413,7 +393,7 @@ class KeyMetrics extends StatelessWidget {
                   alignment: Alignment.center,
                   child: const Text(
                     'Line Chart Placeholder',
-                    style: TextStyle(color: dirtyBrownWhite),
+                    style: TextStyle(color: Colors.white),
                   ),
                 ),
               ],
@@ -444,17 +424,17 @@ class PaymentStatus extends StatelessWidget {
         const SizedBox(height: 10),
         Card(
           elevation: 2,
-          color: dirtyBrownWhite,
           child: Padding(
             padding: const EdgeInsets.all(16),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const Text('90% Paid', style: TextStyle(color: coffeeBrown)),
+                const Text('90% Paid',
+                    style: TextStyle(color: coffeeBrown)),
                 const SizedBox(height: 8),
                 LinearProgressIndicator(
                   value: 0.9,
-                  valueColor: AlwaysStoppedAnimation<Color>(coffeeBrown),
+                  valueColor: const AlwaysStoppedAnimation<Color>(coffeeBrown),
                   backgroundColor: dirtyBrownWhite,
                 ),
                 const SizedBox(height: 8),
@@ -478,8 +458,8 @@ class RecentActivity extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        const Text(
+      children: const [
+        Text(
           'Recent Activity',
           style: TextStyle(
             fontSize: 18,
@@ -487,18 +467,18 @@ class RecentActivity extends StatelessWidget {
             color: coffeeBrown,
           ),
         ),
-        const SizedBox(height: 10),
-        const ActivityItem(
+        SizedBox(height: 10),
+        ActivityItem(
           icon: Icons.person_add,
           title: 'New Resident: Ethan Carter',
           subtitle: 'Room 203',
         ),
-        const ActivityItem(
+        ActivityItem(
           icon: Icons.plumbing,
           title: 'Maintenance: Leaky Faucet',
           subtitle: 'Room 101',
         ),
-        const ActivityItem(
+        ActivityItem(
           icon: Icons.payment,
           title: 'Payment Received: Ugx 750,000',
           subtitle: 'Room 205',
@@ -528,7 +508,7 @@ class ActivityItem extends StatelessWidget {
         child: Icon(icon, color: Colors.white),
       ),
       title: Text(title, style: const TextStyle(color: coffeeBrown)),
-      subtitle: Text(subtitle, style: const TextStyle(color: dirtyBrownWhite)),
+      subtitle: Text(subtitle, style: const TextStyle(color: coffeeBrown)),
     );
   }
 }
